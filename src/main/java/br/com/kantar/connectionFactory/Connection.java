@@ -5,23 +5,24 @@
 package br.com.kantar.connectionFactory;
 
 import com.codoid.products.exception.FilloException;
-import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Fillo;
 
 /**
  *
  * @author eduax
  */
-public class ConnectionInstalados {
-    
-        public Connection getInstaladosConexao() throws FilloException {
+public class Connection {
+
+
+
+    public static com.codoid.products.fillo.Connection getInstaladosConexao(TIPOS_ENTREGAS Entrega) throws FilloException {
 
         System.setProperty("ROW", "4");//Table start row
         System.setProperty("COLUMN", "2");//Table start column
         Fillo fillo = new Fillo();
-        Connection Conexao = fillo.getConnection("C:\\Users\\eduax\\Desktop\\Projetos\\BalanceColect\\FONTE\\teste.xlsx");
+        com.codoid.products.fillo.Connection Conexao = fillo.getConnection(Entrega.getCaminhoArquivo());
         return Conexao;
 
     }
-    
+
 }

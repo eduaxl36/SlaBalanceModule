@@ -10,6 +10,7 @@ import br.com.kantar.model.variaveis.Familia;
 import br.com.kantar.model.variaveis.Idade;
 import br.com.kantar.model.variaveis.Nse;
 import br.com.kantar.model.variaveis.Televisor;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,18 +19,17 @@ import java.util.Objects;
  */
 public abstract class Categoria {
     
-    private Cabo Cabo;
-    private Crianca Crianca;
-    private Familia Familia;
-    private Idade Idade;
-    private Nse Nse;
-    private Televisor Televisor;
+    private List<Cabo> Cabo;
+    private List<Crianca> Crianca;
+    private List<Familia> Familia;
+    private List<Idade> Idade;
+    private List<Nse> Nse;
+    private List<Televisor> Televisor;
 
     public Categoria() {
     }
 
-   
-    public Categoria(Cabo Cabo, Crianca Crianca, Familia Familia, Idade Idade, Nse Nse, Televisor Televisor) {
+    public Categoria(List<Cabo> Cabo, List<Crianca> Crianca, List<Familia> Familia, List<Idade> Idade, List<Nse> Nse, List<Televisor> Televisor) {
         this.Cabo = Cabo;
         this.Crianca = Crianca;
         this.Familia = Familia;
@@ -38,63 +38,63 @@ public abstract class Categoria {
         this.Televisor = Televisor;
     }
 
-    public Cabo getCabo() {
+    public List<Cabo> getCabo() {
         return Cabo;
     }
 
-    public void setCabo(Cabo Cabo) {
+    public void setCabo(List<Cabo> Cabo) {
         this.Cabo = Cabo;
     }
 
-    public Crianca getCrianca() {
+    public List<Crianca> getCrianca() {
         return Crianca;
     }
 
-    public void setCrianca(Crianca Crianca) {
+    public void setCrianca(List<Crianca> Crianca) {
         this.Crianca = Crianca;
     }
 
-    public Familia getFamilia() {
+    public List<Familia> getFamilia() {
         return Familia;
     }
 
-    public void setFamilia(Familia Familia) {
+    public void setFamilia(List<Familia> Familia) {
         this.Familia = Familia;
     }
 
-    public Idade getIdade() {
+    public List<Idade> getIdade() {
         return Idade;
     }
 
-    public void setIdade(Idade Idade) {
+    public void setIdade(List<Idade> Idade) {
         this.Idade = Idade;
     }
 
-    public Nse getNse() {
+    public List<Nse> getNse() {
         return Nse;
     }
 
-    public void setNse(Nse Nse) {
+    public void setNse(List<Nse> Nse) {
         this.Nse = Nse;
     }
 
-    public Televisor getTelevisor() {
+    public List<Televisor> getTelevisor() {
         return Televisor;
     }
 
-    public void setTelevisor(Televisor Televisor) {
+    public void setTelevisor(List<Televisor> Televisor) {
         this.Televisor = Televisor;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.Cabo);
-        hash = 97 * hash + Objects.hashCode(this.Crianca);
-        hash = 97 * hash + Objects.hashCode(this.Familia);
-        hash = 97 * hash + Objects.hashCode(this.Idade);
-        hash = 97 * hash + Objects.hashCode(this.Nse);
-        hash = 97 * hash + Objects.hashCode(this.Televisor);
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.Cabo);
+        hash = 79 * hash + Objects.hashCode(this.Crianca);
+        hash = 79 * hash + Objects.hashCode(this.Familia);
+        hash = 79 * hash + Objects.hashCode(this.Idade);
+        hash = 79 * hash + Objects.hashCode(this.Nse);
+        hash = 79 * hash + Objects.hashCode(this.Televisor);
         return hash;
     }
 
@@ -132,6 +132,7 @@ public abstract class Categoria {
     public String toString() {
         return "Categoria{" + "Cabo=" + Cabo + ", Crianca=" + Crianca + ", Familia=" + Familia + ", Idade=" + Idade + ", Nse=" + Nse + ", Televisor=" + Televisor + '}';
     }
-    
+
+   
   
 }

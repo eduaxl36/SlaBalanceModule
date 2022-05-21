@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class ConfiguracoesDao {
     
-private File ArquivoPrevisto;
+private final File ArquivoPrevisto;
 private Configuracoes Configuracao;
     
 public ConfiguracoesDao(){
@@ -69,11 +70,29 @@ return Configuracoes;
 
 
 
+public long obterPrevisto(String VariavelDescricao,int Praca,int Ano) throws IOException{
+
+   
+    
+    List<Configuracoes> Configuracao= new ConfiguracoesDao().Configuracoes()
+            .stream()
+            .filter(x->x.getCodPraca()==Praca)
+            .filter(x->x.getAno()==Ano)
+            .filter(x->x.getItem().equals(VariavelDescricao))
+            .collect(Collectors.toList());
+            
+    
+    
+     return Configuracao.get(0).getValor();
+
+}
+
+
 
     public static void main(String[] args) throws IOException {
         
         
-        System.out.println(new ConfiguracoesDao().Configuracoes());
+        System.out.println(new ConfiguracoesDao().obterPrevisto("1TV", 103,2022));
         
     }
 

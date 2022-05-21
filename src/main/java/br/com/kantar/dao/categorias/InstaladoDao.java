@@ -4,9 +4,6 @@
  */
 package br.com.kantar.dao.categorias;
 
-import br.com.kantar.connectionFactory.ConnectionInstalados;
-import com.codoid.products.exception.FilloException;
-import com.codoid.products.fillo.Connection;
 
 /**
  *
@@ -14,17 +11,9 @@ import com.codoid.products.fillo.Connection;
  */
 public class InstaladoDao {
     
-Connection Conexao;
-
-    public InstaladoDao() throws FilloException {
-        
-        Conexao = new ConnectionInstalados().getInstaladosConexao();
+    
        
-    }
-    
-    
-
-
+       
     
  
  

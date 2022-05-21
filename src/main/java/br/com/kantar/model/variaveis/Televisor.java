@@ -4,7 +4,6 @@
  */
 package br.com.kantar.model.variaveis;
 
-import br.com.kantar.model.abs.DESCRICOES;
 import br.com.kantar.model.abs.Variavel;
 
 /**
@@ -15,7 +14,10 @@ public class Televisor extends Variavel {
     
     private long Tv1;
     private long Tv2;
-
+    private long PrevistoTv1;
+    private long PrevistoTv2;
+    
+    
     public Televisor() {
     }
 
@@ -24,11 +26,13 @@ public class Televisor extends Variavel {
         this.Tv2 = Tv2;
     }
 
-    public Televisor(long Tv1, long Tv2, DESCRICOES Descricao) {
-        super(Descricao);
+    public Televisor(long Tv1, long Tv2, long PrevistoTv1, long PrevistoTv2) {
         this.Tv1 = Tv1;
         this.Tv2 = Tv2;
+        this.PrevistoTv1 = PrevistoTv1;
+        this.PrevistoTv2 = PrevistoTv2;
     }
+
 
     public long getTv1() {
         return Tv1;
@@ -46,11 +50,29 @@ public class Televisor extends Variavel {
         this.Tv2 = Tv2;
     }
 
+    public long getPrevistoTv1() {
+        return PrevistoTv1;
+    }
+
+    public void setPrevistoTv1(long PrevistoTv1) {
+        this.PrevistoTv1 = PrevistoTv1;
+    }
+
+    public long getPrevistoTv2() {
+        return PrevistoTv2;
+    }
+
+    public void setPrevistoTv2(long PrevistoTv2) {
+        this.PrevistoTv2 = PrevistoTv2;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + (int) (this.Tv1 ^ (this.Tv1 >>> 32));
-        hash = 29 * hash + (int) (this.Tv2 ^ (this.Tv2 >>> 32));
+        int hash = 7;
+        hash = 23 * hash + (int) (this.Tv1 ^ (this.Tv1 >>> 32));
+        hash = 23 * hash + (int) (this.Tv2 ^ (this.Tv2 >>> 32));
+        hash = 23 * hash + (int) (this.PrevistoTv1 ^ (this.PrevistoTv1 >>> 32));
+        hash = 23 * hash + (int) (this.PrevistoTv2 ^ (this.PrevistoTv2 >>> 32));
         return hash;
     }
 
@@ -69,13 +91,28 @@ public class Televisor extends Variavel {
         if (this.Tv1 != other.Tv1) {
             return false;
         }
-        return this.Tv2 == other.Tv2;
+        if (this.Tv2 != other.Tv2) {
+            return false;
+        }
+        if (this.PrevistoTv1 != other.PrevistoTv1) {
+            return false;
+        }
+        return this.PrevistoTv2 == other.PrevistoTv2;
     }
 
     @Override
     public String toString() {
-        return "Televisor{" + "Tv1=" + Tv1 + ", Tv2=" + Tv2 + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Televisor{");
+        sb.append("Tv1=").append(Tv1);
+        sb.append(", Tv2=").append(Tv2);
+        sb.append(", PrevistoTv1=").append(PrevistoTv1);
+        sb.append(", PrevistoTv2=").append(PrevistoTv2);
+        sb.append('}');
+        return sb.toString();
     }
+
+  
     
     
   
