@@ -46,9 +46,7 @@ public class TelevisorDao {
         for (int i = 0; i < Televisores1.size(); i++) {
             Televisor Televisor = new Televisor(
                     Televisores1.get(i),
-                    Televisores2.get(i),
-                    Configuracoes.obterPrevisto("1TV", 103, 2022),
-                    Configuracoes.obterPrevisto("2TV", 103, 2022)
+                    Televisores2.get(i)
             );
             Televisores.add(Televisor);
 
