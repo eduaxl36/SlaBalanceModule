@@ -4,11 +4,13 @@
  */
 package br.com.kantar.dao.variaveis;
 
-import static br.com.kantar.connectionFactory.Connection.getInstaladosConexao;
+import static br.com.kantar.connectionFactory.Connection.getConexao;
+import br.com.kantar.connectionFactory.PRACA;
+import static br.com.kantar.connectionFactory.PRACA.obterPraca;
 import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
-import br.com.kantar.dao.cf.ConfiguracoesDao;
 import br.com.kantar.model.variaveis.Televisor;
 import br.com.kantar.util.Util;
+import static br.com.kantar.util.Util.retornoData;
 import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Recordset;
@@ -24,17 +26,18 @@ import java.util.List;
  */
 public class TelevisorDao {
 
-    private String Praca;
+    private int CodPraca;
     private int Mes;
-    private TIPOS_ENTREGAS Entrega;
-    private ConfiguracoesDao Configuracoes;
+    private TIPOS_ENTREGAS Processo;
+    private int Ano;
 
-    public TelevisorDao(String Praca, int Mes, TIPOS_ENTREGAS Entrega) {
-        this.Praca = Praca;
+    public TelevisorDao(int CodPraca, int Mes, int Ano, TIPOS_ENTREGAS Processo) {
+        this.CodPraca = CodPraca;
         this.Mes = Mes;
-        this.Entrega = Entrega;
-        Configuracoes = new ConfiguracoesDao();
+        this.Processo = Processo;
+        this.Ano = Ano;
     }
+
 
     public TelevisorDao() {
     }
@@ -44,9 +47,9 @@ public class TelevisorDao {
         List<Televisor> Televisores = new ArrayList();
 
         for (int i = 0; i < Televisores1.size(); i++) {
-            Televisor Televisor = new Televisor(
+            Televisor Televisor = new Televisor(retornoData(i+1,this.Mes,this.Ano),
                     Televisores1.get(i),
-                    Televisores2.get(i)
+                    Televisores2.get(i), this.Processo.toString(), this.CodPraca
             );
             Televisores.add(Televisor);
 
@@ -58,10 +61,10 @@ public class TelevisorDao {
 
     public List<Integer> persistirPlanilhaObterTelevisores1() throws FilloException {
 
-        String STRING_CONEXAO_GET_TELEVISOR1 = "Select * from " + this.Praca + " where BL='TV1'";
+        String STRING_CONEXAO_GET_TELEVISOR1 = "Select * from " + obterPraca(this.CodPraca) + " where BL='TV1'";
         List<Integer> Televisores1 = new LinkedList<>();
 
-        Connection Conexao = getInstaladosConexao(this.Entrega);
+        Connection Conexao = getConexao(this.Processo);
 
         Recordset ConexaoTv1 = Conexao.executeQuery(STRING_CONEXAO_GET_TELEVISOR1);
 
@@ -83,11 +86,11 @@ public class TelevisorDao {
 
     public List<Integer> persistirPlanilhaObterTelevisores2() throws FilloException {
 
-        String STRING_CONEXAO_GET_TELEVISOR2 = "Select * from " + this.Praca + " where BL='TV2'";
+        String STRING_CONEXAO_GET_TELEVISOR2 = "Select * from " + obterPraca(this.CodPraca) + " where BL='TV2'";
 
         List<Integer> Televisores2 = new LinkedList<>();
 
-        Connection Conexao = getInstaladosConexao(this.Entrega);
+        Connection Conexao = getConexao(this.Processo);
 
         Recordset ConexaoTv2 = Conexao.executeQuery(STRING_CONEXAO_GET_TELEVISOR2);
 
@@ -109,9 +112,28 @@ public class TelevisorDao {
 
     public static void main(String[] args) throws FilloException, IOException {
 
-        TelevisorDao tvdao = new TelevisorDao("CAM", Calendar.APRIL, TIPOS_ENTREGAS.INSTALADO);
+        TelevisorDao tvdao = new TelevisorDao(PRACA.CAM.getCodigo(), Calendar.APRIL, 2022,TIPOS_ENTREGAS.INSTALADO);
 
-        System.out.println(tvdao.obterListaRetornoTelevisores(tvdao.persistirPlanilhaObterTelevisores1(), tvdao.persistirPlanilhaObterTelevisores2()));
+       tvdao.obterListaRetornoTelevisores(
+               tvdao.persistirPlanilhaObterTelevisores1(), 
+               tvdao.persistirPlanilhaObterTelevisores2()).forEach(
+               
+               x->{
+               
+               
+                   System.out.println(x.getData()+" "+x.getTv1()
+                                                 +" "+x.getTv2()
+                                                 +" "+x.getProcesso()+" "
+                                                 +" "+x.getCodPraca()
+                   
+                   
+                   
+                   );
+               
+               }
+               
+               
+               );
 
     }
 

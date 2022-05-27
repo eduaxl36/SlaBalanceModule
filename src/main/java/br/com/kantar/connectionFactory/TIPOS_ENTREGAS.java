@@ -10,9 +10,9 @@ package br.com.kantar.connectionFactory;
  */
 public enum TIPOS_ENTREGAS {
     
-    INSTALADO("C:\\Users\\eduax\\Desktop\\Projetos\\BalanceColect\\FONTE\\INSTALADO.xlsx"),
-    PROCESSADO("C:\\Users\\eduax\\Desktop\\Projetos\\BalanceColect\\FONTE\\PROCESSADO.xlsx"),
-    CONTRATADO("C:\\Users\\eduax\\Desktop\\Projetos\\BalanceColect\\FONTE\\CONTRATADO.xlsx");
+    INSTALADO("C:\\Users\\eduardo.fernando\\Desktop\\Projetos\\BalanceColect\\SlaBalanceModule\\FONTE\\INSTALADO.xlsx"),
+    PROCESSADO("C:\\Users\\eduardo.fernando\\Desktop\\Projetos\\BalanceColect\\SlaBalanceModule\\FONTE\\PROCESSADO.xlsx"),
+    CONTRATADO("C:\\Users\\eduardo.fernando\\Desktop\\Projetos\\BalanceColect\\SlaBalanceModule\\FONTE\\CONTRATADO.xlsx");
     
     private String CaminhoArquivo;
 

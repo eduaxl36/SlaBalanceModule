@@ -15,7 +15,7 @@ public class Connection {
 
 
 
-    public static com.codoid.products.fillo.Connection getInstaladosConexao(TIPOS_ENTREGAS Entrega) throws FilloException {
+    public static com.codoid.products.fillo.Connection getConexao(TIPOS_ENTREGAS Entrega) throws FilloException {
 
         System.setProperty("ROW", "4");//Table start row
         System.setProperty("COLUMN", "2");//Table start column

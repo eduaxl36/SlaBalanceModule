@@ -4,8 +4,8 @@
  */
 package br.com.kantar.model.variaveis;
 
-import br.com.kantar.model.abs.DESCRICOES;
 import br.com.kantar.model.abs.Variavel;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,20 +15,19 @@ public class Cabo extends Variavel {
     
     private long ComCabo;
     private long SemCabo;
-
-
+    private String Processo;
+    private int CodPraca;
+    
+  
     public Cabo() {
     }
 
-    public Cabo(long ComCabo, long SemCabo) {
+    public Cabo(LocalDate Data,long ComCabo, long SemCabo,String Processo,int CodPraca) {
+        super(Data);
         this.ComCabo = ComCabo;
         this.SemCabo = SemCabo;
-    }
-
-    public Cabo(long ComCabo, long SemCabo, DESCRICOES Descricao) {
-        super(Descricao);
-        this.ComCabo = ComCabo;
-        this.SemCabo = SemCabo;
+        this.Processo = Processo;
+        this.CodPraca = CodPraca;
     }
 
     public long getComCabo() {
@@ -47,38 +46,30 @@ public class Cabo extends Variavel {
         this.SemCabo = SemCabo;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 11 * hash + (int) (this.ComCabo ^ (this.ComCabo >>> 32));
-        hash = 11 * hash + (int) (this.SemCabo ^ (this.SemCabo >>> 32));
-        return hash;
+    public String getCategoria() {
+        return Processo;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cabo other = (Cabo) obj;
-        if (this.ComCabo != other.ComCabo) {
-            return false;
-        }
-        return this.SemCabo == other.SemCabo;
+    public void setCategoria(String Processo) {
+        this.Processo = Processo;
     }
 
-    @Override
-    public String toString() {
-        return "Cabo{" + "ComCabo=" + ComCabo + ", SemCabo=" + SemCabo + '}';
+    public int getPraca() {
+        return CodPraca;
     }
-   
+
+    public void setPraca(int CodPraca) {
+        this.CodPraca = CodPraca;
+    }
+
+
+
     
+    
+
+
+ 
+     
     
     
     

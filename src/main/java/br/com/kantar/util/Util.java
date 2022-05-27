@@ -4,6 +4,8 @@
  */
 package br.com.kantar.util;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -14,6 +16,22 @@ import java.util.List;
  */
 public class Util {
     
+    
+
+    public static LocalDate retornoData(int Adicional,int Mes,int Ano){
+      
+    LocalDate DataRecebida = LocalDate.of(Ano, Mes+1, 1);
+    
+    if(Adicional==1){
+    return DataRecebida;
+    }
+    else{
+    
+    return DataRecebida.plusDays(Adicional-1);
+    
+    }
+    
+    }
     
     public static int obterUltimoDiaMes(int Mes){
     
@@ -47,5 +65,12 @@ public class Util {
     
         return Pracas;
     
+    }
+    
+    public static void main(String[] args) {
+        
+        System.out.println(retornoData(31,Calendar.JANUARY,2022 ));  
+        
+        
     }
 }

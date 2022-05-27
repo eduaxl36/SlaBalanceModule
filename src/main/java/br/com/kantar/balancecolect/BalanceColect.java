@@ -94,8 +94,8 @@ public List<Televisor> obterTelevisores() throws FilloException{
         for(int i=0;i<Televisores1.size();i++){
         
         
-        Televisores.add(new Televisor(Televisores1.get(i), Televisores2.get(i)));
-        
+//        Televisores.add(new Televisor(Televisores1.get(i), Televisores2.get(i)));
+//        
         
         }        
                 

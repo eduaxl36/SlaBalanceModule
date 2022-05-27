@@ -4,8 +4,10 @@
  */
 package br.com.kantar.model.variaveis;
 
+import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
 import br.com.kantar.model.abs.DESCRICOES;
 import br.com.kantar.model.abs.Variavel;
+import java.time.LocalDate;
 
 /**
  *
@@ -15,19 +17,18 @@ public class Crianca extends Variavel {
     
     private long ComCrianca;
     private long SemCrianca;
+    private String Processo;
+    private int CodPraca;
 
     public Crianca() {
     }
 
-    public Crianca(long ComCrianca, long SemCrianca) {
+    public Crianca(LocalDate Data,long ComCrianca, long SemCrianca,String Processo,int CodPraca) {
+        super(Data);
         this.ComCrianca = ComCrianca;
         this.SemCrianca = SemCrianca;
-    }
-
-    public Crianca(long ComCrianca, long SemCrianca, DESCRICOES Descricao) {
-        super(Descricao);
-        this.ComCrianca = ComCrianca;
-        this.SemCrianca = SemCrianca;
+        this.Processo = Processo;
+        this.CodPraca = CodPraca;
     }
 
     public long getComCrianca() {
@@ -46,36 +47,22 @@ public class Crianca extends Variavel {
         this.SemCrianca = SemCrianca;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + (int) (this.ComCrianca ^ (this.ComCrianca >>> 32));
-        hash = 37 * hash + (int) (this.SemCrianca ^ (this.SemCrianca >>> 32));
-        return hash;
+    public String getProcesso() {
+        return Processo;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Crianca other = (Crianca) obj;
-        if (this.ComCrianca != other.ComCrianca) {
-            return false;
-        }
-        return this.SemCrianca == other.SemCrianca;
+    public void setProcesso(String Processo) {
+        this.Processo = Processo;
     }
 
-    @Override
-    public String toString() {
-        return "Crianca{" + "ComCrianca=" + ComCrianca + ", SemCrianca=" + SemCrianca + '}';
+    public int getCodPraca() {
+        return CodPraca;
     }
+
+    public void setCodPraca(int CodPraca) {
+        this.CodPraca = CodPraca;
+    }
+
     
     
     

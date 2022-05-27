@@ -4,8 +4,10 @@
  */
 package br.com.kantar.model.variaveis;
 
+
 import br.com.kantar.model.abs.Variavel;
-import java.util.logging.Logger;
+import java.time.LocalDate;
+
 
 /**
  *
@@ -15,19 +17,17 @@ public class Televisor extends Variavel {
     
     private long Tv1;
     private long Tv2;
-
+    private String Processo;
+    private int CodPraca;
     
-    
-    public Televisor() {
-    }
-
-    public Televisor(long Tv1, long Tv2) {
+    public Televisor( LocalDate Data,long Tv1, long Tv2,String Processo, int CodPraca) {
+        super(Data);
         this.Tv1 = Tv1;
         this.Tv2 = Tv2;
+        this.Processo = Processo;
+        this.CodPraca = CodPraca;
+        
     }
-
-
-
 
     public long getTv1() {
         return Tv1;
@@ -44,40 +44,25 @@ public class Televisor extends Variavel {
     public void setTv2(long Tv2) {
         this.Tv2 = Tv2;
     }
-    private static final Logger LOG = Logger.getLogger(Televisor.class.getName());
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + (int) (this.Tv1 ^ (this.Tv1 >>> 32));
-        hash = 97 * hash + (int) (this.Tv2 ^ (this.Tv2 >>> 32));
-        return hash;
+    public String getProcesso() {
+        return Processo;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Televisor other = (Televisor) obj;
-        if (this.Tv1 != other.Tv1) {
-            return false;
-        }
-        return this.Tv2 == other.Tv2;
+    public void setProcesso(String Processo) {
+        this.Processo = Processo;
     }
 
-    @Override
-    public String toString() {
-        return "Televisor{" + "Tv1=" + Tv1 + ", Tv2=" + Tv2 + '}';
+    public int getCodPraca() {
+        return CodPraca;
     }
 
-  
+    public void setCodPraca(int CodPraca) {
+        this.CodPraca = CodPraca;
+    }
+
+   
+
 
     
   

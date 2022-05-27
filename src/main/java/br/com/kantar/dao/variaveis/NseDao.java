@@ -4,11 +4,13 @@
  */
 package br.com.kantar.dao.variaveis;
 
-import static br.com.kantar.connectionFactory.Connection.getInstaladosConexao;
+import static br.com.kantar.connectionFactory.Connection.getConexao;
+import br.com.kantar.connectionFactory.PRACA;
+import static br.com.kantar.connectionFactory.PRACA.obterPraca;
 import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
 import br.com.kantar.model.variaveis.Nse;
-import br.com.kantar.model.variaveis.Televisor;
 import br.com.kantar.util.Util;
+import static br.com.kantar.util.Util.retornoData;
 import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Recordset;
@@ -22,31 +24,29 @@ import java.util.List;
  * @author eduax
  */
 public class NseDao {
-    
-    
-    private String Praca;
-    private int Mes;
-    private TIPOS_ENTREGAS Entrega;
 
-    
-    public NseDao(String Praca, int Mes, TIPOS_ENTREGAS Entrega) {
-        this.Praca = Praca;
+    private int CodPraca;
+    private int Mes;
+    private TIPOS_ENTREGAS Processo;
+    private int Ano;
+
+    public NseDao(int CodPraca, int Mes, int Ano, TIPOS_ENTREGAS Processo) {
+        this.CodPraca = CodPraca;
         this.Mes = Mes;
-        this.Entrega = Entrega;
+        this.Processo = Processo;
+        this.Ano = Ano;
     }
 
     public NseDao() {
     }
 
-
-
-    public List<Nse> obterListaRetornoNSE(List<Integer> Ab,List<Integer> C1,List<Integer> C2,List<Integer>De) {
+    public List<Nse> obterListaRetornoNSE(List<Integer> Ab, List<Integer> C1, List<Integer> C2, List<Integer> De) {
 
         List<Nse> ClassesNse = new ArrayList();
 
         for (int i = 0; i < Ab.size(); i++) {
 
-            ClassesNse.add(new Nse(Ab.get(i), C1.get(i),C2.get(i),De.get(i)));
+            ClassesNse.add(new Nse(retornoData(i + 1, this.Mes, this.Ano), Ab.get(i), C1.get(i), C2.get(i), De.get(i), this.Processo.toString(), this.CodPraca));
 
         }
 
@@ -56,19 +56,19 @@ public class NseDao {
 
     public List<Integer> persistirPlanilhaObterNseAb() throws FilloException {
 
-        String STRING_CONEXAO_GET_AB = "Select * from " + this.Praca + " where BL='AB'";
-        
+        String STRING_CONEXAO_GET_AB = "Select * from " + obterPraca(this.CodPraca) + " where BL='AB'";
+
         List<Integer> NsesAB = new LinkedList<>();
 
-        Connection Conexao = getInstaladosConexao(this.Entrega);
+        Connection Conexao = getConexao(this.Processo);
 
         Recordset ResultSet = Conexao.executeQuery(STRING_CONEXAO_GET_AB);
 
         while (ResultSet.next()) {
 
             for (int i = 1; i <= Util.obterUltimoDiaMes(this.Mes); i++) {
-               
-              NsesAB.add(Integer.parseInt(ResultSet.getField("" + i)));
+
+                NsesAB.add(Integer.parseInt(ResultSet.getField("" + i)));
 
             }
 
@@ -80,24 +80,21 @@ public class NseDao {
         return NsesAB;
     }
 
- 
-    
-    
     public List<Integer> persistirPlanilhaObterNseC1() throws FilloException {
 
-        String STRING_CONEXAO_GET_C1 = "Select * from " + this.Praca + " where BL='C1'";
-        
+        String STRING_CONEXAO_GET_C1 = "Select * from " + obterPraca(this.CodPraca) + " where BL='C1'";
+
         List<Integer> NsesC1 = new LinkedList<>();
 
-        Connection Conexao = getInstaladosConexao(this.Entrega);
+        Connection Conexao = getConexao(this.Processo);
 
         Recordset ResultSet = Conexao.executeQuery(STRING_CONEXAO_GET_C1);
 
         while (ResultSet.next()) {
 
             for (int i = 1; i <= Util.obterUltimoDiaMes(this.Mes); i++) {
-               
-              NsesC1.add(Integer.parseInt(ResultSet.getField("" + i)));
+
+                NsesC1.add(Integer.parseInt(ResultSet.getField("" + i)));
 
             }
 
@@ -108,26 +105,22 @@ public class NseDao {
 
         return NsesC1;
     }
-    
-    
- 
-    
-    
-     public List<Integer> persistirPlanilhaObterNseC2() throws FilloException {
 
-        String STRING_CONEXAO_GET_C2 = "Select * from " + this.Praca + " where BL='C2'";
-        
+    public List<Integer> persistirPlanilhaObterNseC2() throws FilloException {
+
+        String STRING_CONEXAO_GET_C2 = "Select * from " + obterPraca(this.CodPraca) + " where BL='C2'";
+
         List<Integer> NsesC2 = new LinkedList<>();
 
-        Connection Conexao = getInstaladosConexao(this.Entrega);
+        Connection Conexao = getConexao(this.Processo);
 
         Recordset ResultSet = Conexao.executeQuery(STRING_CONEXAO_GET_C2);
 
         while (ResultSet.next()) {
 
             for (int i = 1; i <= Util.obterUltimoDiaMes(this.Mes); i++) {
-               
-              NsesC2.add(Integer.parseInt(ResultSet.getField("" + i)));
+
+                NsesC2.add(Integer.parseInt(ResultSet.getField("" + i)));
 
             }
 
@@ -138,26 +131,22 @@ public class NseDao {
 
         return NsesC2;
     }
-    
-     
-     
-     
-     
-   public List<Integer> persistirPlanilhaObterNseDE() throws FilloException {
 
-        String STRING_CONEXAO_GET_DE = "Select * from " + this.Praca + " where BL='DE'";
-        
+    public List<Integer> persistirPlanilhaObterNseDE() throws FilloException {
+
+        String STRING_CONEXAO_GET_DE = "Select * from " + obterPraca(this.CodPraca) + " where BL='DE'";
+
         List<Integer> NsesDE = new LinkedList<>();
 
-        Connection Conexao = getInstaladosConexao(this.Entrega);
+        Connection Conexao = getConexao(this.Processo);
 
         Recordset ResultSet = Conexao.executeQuery(STRING_CONEXAO_GET_DE);
 
         while (ResultSet.next()) {
 
             for (int i = 1; i <= Util.obterUltimoDiaMes(this.Mes); i++) {
-               
-              NsesDE.add(Integer.parseInt(ResultSet.getField("" + i)));
+
+                NsesDE.add(Integer.parseInt(ResultSet.getField("" + i)));
 
             }
 
@@ -167,36 +156,31 @@ public class NseDao {
         Conexao.close();
 
         return NsesDE;
-    }  
-     
-     
-    public static void main(String[] args) throws FilloException {
-        
-              NseDao tvdao = new NseDao("CAM", Calendar.APRIL, TIPOS_ENTREGAS.INSTALADO);
-
-              System.out.println(
-              
-              
-              
-                         tvdao.obterListaRetornoNSE(
-                      tvdao.persistirPlanilhaObterNseAb(), 
-                      tvdao.persistirPlanilhaObterNseC1(), 
-                      tvdao.persistirPlanilhaObterNseC2(), 
-                      tvdao.persistirPlanilhaObterNseDE()
-              
-              )   
-              
-              
-              
-              
-              );
-
-        
-        
-       
-
-        
-        
     }
-    
+
+    public static void main(String[] args) throws FilloException {
+
+        NseDao tvdao = new NseDao(PRACA.CAM.getCodigo(), Calendar.APRIL, 2022, TIPOS_ENTREGAS.INSTALADO);
+
+        tvdao.obterListaRetornoNSE(
+                tvdao.persistirPlanilhaObterNseAb(),
+                tvdao.persistirPlanilhaObterNseC1(),
+                tvdao.persistirPlanilhaObterNseC2(),
+                tvdao.persistirPlanilhaObterNseDE()
+        ).forEach(x -> {
+
+            System.out.println(
+                    x.getData() + " "
+                    + x.getAb() + " "
+                    + x.getC1() + " "
+                    + x.getC2() + " "
+                    + x.getDe() + " "
+                    + x.getProcesso()+ " "
+                    + x.getCodPraca()
+            );
+
+        });
+
+    }
+
 }

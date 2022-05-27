@@ -4,8 +4,10 @@
  */
 package br.com.kantar.model.variaveis;
 
+import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
 import br.com.kantar.model.abs.DESCRICOES;
 import br.com.kantar.model.abs.Variavel;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,6 +18,8 @@ public class Familia extends Variavel {
    private long T1;
    private long T3;
    private long T5;
+   private String Processo;
+   private int CodPraca;
 
     public Familia() {
     }
@@ -26,11 +30,13 @@ public class Familia extends Variavel {
         this.T5 = T5;
     }
 
-    public Familia(long T1, long T3, long T5, DESCRICOES Descricao) {
-        super(Descricao);
+    public Familia(LocalDate Data,long T1, long T3, long T5,String Processo,int CodPraca) {
+        super(Data);
         this.T1 = T1;
         this.T3 = T3;
         this.T5 = T5;
+        this.Processo=Processo;
+        this.CodPraca=CodPraca;
     }
 
     public long getT1() {
@@ -57,41 +63,21 @@ public class Familia extends Variavel {
         this.T5 = T5;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + (int) (this.T1 ^ (this.T1 >>> 32));
-        hash = 53 * hash + (int) (this.T3 ^ (this.T3 >>> 32));
-        hash = 53 * hash + (int) (this.T5 ^ (this.T5 >>> 32));
-        return hash;
+    public String getProcesso() {
+        return Processo;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Familia other = (Familia) obj;
-        if (this.T1 != other.T1) {
-            return false;
-        }
-        if (this.T3 != other.T3) {
-            return false;
-        }
-        return this.T5 == other.T5;
+    public void setProcesso(String Processo) {
+        this.Processo = Processo;
     }
 
-    @Override
-    public String toString() {
-        return "Familia{" + "T1=" + T1 + ", T3=" + T3 + ", T5=" + T5 + '}';
+    public int getCodPraca() {
+        return CodPraca;
     }
-    
-   
+
+    public void setCodPraca(int CodPraca) {
+        this.CodPraca = CodPraca;
+    }
+
    
     }

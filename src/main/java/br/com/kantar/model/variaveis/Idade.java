@@ -4,8 +4,10 @@
  */
 package br.com.kantar.model.variaveis;
 
+import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
 import br.com.kantar.model.abs.DESCRICOES;
 import br.com.kantar.model.abs.Variavel;
+import java.time.LocalDate;
 
 /**
  *
@@ -16,6 +18,8 @@ public class Idade extends Variavel {
     private long I15;
     private long I35;
     private long I50;
+   private TIPOS_ENTREGAS Categoria;
+   private int CodPraca;
 
     public Idade() {
     }
@@ -26,11 +30,13 @@ public class Idade extends Variavel {
         this.I50 = I50;
     }
 
-    public Idade(long I15, long I35, long I50, DESCRICOES Descricao) {
-        super(Descricao);
+    public Idade(LocalDate Data,long I15, long I35, long I50,TIPOS_ENTREGAS Categoria,int CodPraca) {
+        super(Data);
         this.I15 = I15;
         this.I35 = I35;
         this.I50 = I50;
+        this.Categoria=Categoria;
+        this.CodPraca=CodPraca;
     }
 
     public long getI15() {
@@ -57,41 +63,22 @@ public class Idade extends Variavel {
         this.I50 = I50;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + (int) (this.I15 ^ (this.I15 >>> 32));
-        hash = 23 * hash + (int) (this.I35 ^ (this.I35 >>> 32));
-        hash = 23 * hash + (int) (this.I50 ^ (this.I50 >>> 32));
-        return hash;
+    public TIPOS_ENTREGAS getCategoria() {
+        return Categoria;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Idade other = (Idade) obj;
-        if (this.I15 != other.I15) {
-            return false;
-        }
-        if (this.I35 != other.I35) {
-            return false;
-        }
-        return this.I50 == other.I50;
+    public void setCategoria(TIPOS_ENTREGAS Categoria) {
+        this.Categoria = Categoria;
     }
 
-    @Override
-    public String toString() {
-        return "Idade{" + "I15=" + I15 + ", I35=" + I35 + ", I50=" + I50 + '}';
+    public int getCodPraca() {
+        return CodPraca;
     }
-    
+
+    public void setCodPraca(int CodPraca) {
+        this.CodPraca = CodPraca;
+    }
+
     
     
     

@@ -11,7 +11,7 @@
 <hibernate-configuration>
 	<session-factory>
 	
-   		<property name="connection.url">jdbc:postgresql://localhost:5489/Balance</property> <!-- BD Mane -->
+   		<property name="connection.url">jdbc:postgresql://localhost:5475/Balance</property> <!-- BD Mane -->
    		<property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
    		<property name="connection.username">postgres</property> <!-- DB User -->
    		<property name="connection.password">jesus124</property> <!-- DB Password -->

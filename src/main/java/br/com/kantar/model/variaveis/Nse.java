@@ -4,36 +4,34 @@
  */
 package br.com.kantar.model.variaveis;
 
-import br.com.kantar.model.abs.DESCRICOES;
+
 import br.com.kantar.model.abs.Variavel;
+import java.time.LocalDate;
 
 /**
  *
  * @author eduax
  */
 public class Nse extends Variavel {
-  
+
     private long Ab;
     private long C1;
     private long C2;
     private long De;
+    private String Processo;
+    private int CodPraca;
 
     public Nse() {
     }
 
-    public Nse(long Ab, long C1, long C2, long De) {
+    public Nse(LocalDate Data, long Ab, long C1, long C2, long De, String Processo, int CodPraca) {
+        super(Data);
         this.Ab = Ab;
         this.C1 = C1;
         this.C2 = C2;
         this.De = De;
-    }
-
-    public Nse(long Ab, long C1, long C2, long De, DESCRICOES Descricao) {
-        super(Descricao);
-        this.Ab = Ab;
-        this.C1 = C1;
-        this.C2 = C2;
-        this.De = De;
+        this.Processo = Processo;
+        this.CodPraca = CodPraca;
     }
 
     public long getAb() {
@@ -68,45 +66,22 @@ public class Nse extends Variavel {
         this.De = De;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (int) (this.Ab ^ (this.Ab >>> 32));
-        hash = 37 * hash + (int) (this.C1 ^ (this.C1 >>> 32));
-        hash = 37 * hash + (int) (this.C2 ^ (this.C2 >>> 32));
-        hash = 37 * hash + (int) (this.De ^ (this.De >>> 32));
-        return hash;
+    public String getProcesso() {
+        return Processo;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Nse other = (Nse) obj;
-        if (this.Ab != other.Ab) {
-            return false;
-        }
-        if (this.C1 != other.C1) {
-            return false;
-        }
-        if (this.C2 != other.C2) {
-            return false;
-        }
-        return this.De == other.De;
+    public void setProcesso(String Processo) {
+        this.Processo = Processo;
     }
 
-    @Override
-    public String toString() {
-        return "Nse{" + "Ab=" + Ab + ", C1=" + C1 + ", C2=" + C2 + ", De=" + De + '}';
+    public int getCodPraca() {
+        return CodPraca;
     }
-    
-    
-     
+
+    public void setCodPraca(int CodPraca) {
+        this.CodPraca = CodPraca;
+    }
+
+
+
 }
