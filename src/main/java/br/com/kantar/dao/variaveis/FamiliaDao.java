@@ -30,6 +30,8 @@ public class FamiliaDao {
     private TIPOS_ENTREGAS Processo;
     private int Ano;
 
+    
+    
     public FamiliaDao(int CodPraca, int Mes,int Ano, TIPOS_ENTREGAS Processo) {
         this.CodPraca = CodPraca;
         this.Mes = Mes;

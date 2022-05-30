@@ -14,17 +14,19 @@ public class Configuracoes {
     
     private int Ano;
     private int CodPraca;
-    String Item;
+    private String Variavel;
+    private String Item;
     private int Valor;
 
-    public Configuracoes() {
-    }
-
-    public Configuracoes(int Ano, int CodPraca, String Item, int Valor) {
+    public Configuracoes(int Ano, int CodPraca, String Variavel, String Item, int Valor) {
         this.Ano = Ano;
         this.CodPraca = CodPraca;
+        this.Variavel = Variavel;
         this.Item = Item;
         this.Valor = Valor;
+    }
+
+    public Configuracoes() {
     }
 
     public int getAno() {
@@ -41,6 +43,14 @@ public class Configuracoes {
 
     public void setCodPraca(int CodPraca) {
         this.CodPraca = CodPraca;
+    }
+
+    public String getVariavel() {
+        return Variavel;
+    }
+
+    public void setVariavel(String Variavel) {
+        this.Variavel = Variavel;
     }
 
     public String getItem() {
@@ -60,43 +70,20 @@ public class Configuracoes {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + this.Ano;
-        hash = 59 * hash + this.CodPraca;
-        hash = 59 * hash + Objects.hashCode(this.Item);
-        hash = 59 * hash + this.Valor;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Configuracoes other = (Configuracoes) obj;
-        if (this.Ano != other.Ano) {
-            return false;
-        }
-        if (this.CodPraca != other.CodPraca) {
-            return false;
-        }
-        if (this.Valor != other.Valor) {
-            return false;
-        }
-        return Objects.equals(this.Item, other.Item);
-    }
-
-    @Override
     public String toString() {
-        return "Configuracoes{" + "Ano=" + Ano + ", CodPraca=" + CodPraca + ", Item=" + Item + ", Valor=" + Valor + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Configuracoes{Ano=").append(Ano);
+        sb.append(", CodPraca=").append(CodPraca);
+        sb.append(", Variavel=").append(Variavel);
+        sb.append(", Item=").append(Item);
+        sb.append(", Valor=").append(Valor);
+        sb.append('}');
+        return sb.toString();
     }
+
+    
+    
+    
     
     
    

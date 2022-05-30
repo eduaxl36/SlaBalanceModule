@@ -31,6 +31,9 @@ public class TelevisorDao {
     private TIPOS_ENTREGAS Processo;
     private int Ano;
 
+    
+    
+    
     public TelevisorDao(int CodPraca, int Mes, int Ano, TIPOS_ENTREGAS Processo) {
         this.CodPraca = CodPraca;
         this.Mes = Mes;

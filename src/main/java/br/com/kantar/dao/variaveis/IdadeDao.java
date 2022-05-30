@@ -29,6 +29,10 @@ public class IdadeDao {
     private int Mes;
     private TIPOS_ENTREGAS Categoria;
     private int Ano;
+  
+    
+    
+    
     
     public IdadeDao(int CodPraca, int Mes,int Ano, TIPOS_ENTREGAS Categoria) {
         this.CodPraca = CodPraca;

@@ -4,9 +4,11 @@
  */
 package br.com.kantar.connectionFactory;
 
-import java.io.File;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import br.com.kantar.model.variaveis.Cabo;
+import java.time.LocalDate;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 
@@ -15,31 +17,28 @@ import org.hibernate.cfg.Configuration;
 
 
 public class HibernateUtil {
-     private static final SessionFactory sessionFactory = buildSessionFactory();
-  
-    private static SessionFactory buildSessionFactory() {
+         
+    public EntityManager ConnectionFactoryJPA(){
+    
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("BalanceJPA");
+        EntityManager em =emf.createEntityManager();
         
-        try {
-            return new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("build SeesionFactory failed :" + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
+        return em;
+    
     }
-  
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
-  
-    public static void close() {
-        // Close all cached and active connection pools
-        getSessionFactory().close();
-    }
-
     
     
     public static void main(String[] args) {
-        buildSessionFactory() ;
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("BalanceJPA");
+        EntityManager em =emf.createEntityManager();
+        
+        em.getTransaction().begin();
+        Cabo c1 = new Cabo(LocalDate.now(), 0, 0, "teste", 103);
+        em.persist(c1);
+        em.getTransaction().commit();
+    
+    
     }
     
     

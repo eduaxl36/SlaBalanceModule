@@ -34,10 +34,11 @@ public Configuracoes Configuracao(String[]InstanciasLinha){
 
 int Ano = Integer.parseInt(InstanciasLinha[0]);
 int CodPraca = Integer.parseInt(InstanciasLinha[1]);
+String Variavel =  InstanciasLinha[3];
 String Item = InstanciasLinha[2];
-int Valor = Integer.parseInt(InstanciasLinha[3]);
+int Valor = Integer.parseInt(InstanciasLinha[4]);
 
-Configuracao = new Configuracoes(Ano, CodPraca, Item, Valor);
+Configuracao = new Configuracoes(Ano, CodPraca,Variavel,Item, Valor);
 
 return Configuracao;
    
@@ -70,15 +71,16 @@ return Configuracoes;
 
 
 
-public long obterPrevisto(String VariavelDescricao,int Praca,int Ano) throws IOException{
+public long obterPrevisto(String Item,int Praca,int Ano) throws IOException{
 
    
     
     List<Configuracoes> Configuracao= new ConfiguracoesDao().Configuracoes()
+            
             .stream()
             .filter(x->x.getCodPraca()==Praca)
             .filter(x->x.getAno()==Ano)
-            .filter(x->x.getItem().equals(VariavelDescricao))
+            .filter(x->x.getItem().equals(Item))
             .collect(Collectors.toList());
             
     

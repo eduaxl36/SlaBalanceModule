@@ -30,6 +30,9 @@ public class NseDao {
     private TIPOS_ENTREGAS Processo;
     private int Ano;
 
+    
+    
+
     public NseDao(int CodPraca, int Mes, int Ano, TIPOS_ENTREGAS Processo) {
         this.CodPraca = CodPraca;
         this.Mes = Mes;

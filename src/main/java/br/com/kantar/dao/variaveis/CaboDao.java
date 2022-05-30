@@ -5,6 +5,7 @@
 package br.com.kantar.dao.variaveis;
 
 import static br.com.kantar.connectionFactory.Connection.getConexao;
+import br.com.kantar.connectionFactory.HibernateUtil;
 import br.com.kantar.connectionFactory.PRACA;
 import static br.com.kantar.connectionFactory.PRACA.obterPraca;
 import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
@@ -14,10 +15,12 @@ import static br.com.kantar.util.Util.retornoData;
 import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Connection;
 import com.codoid.products.fillo.Recordset;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -29,7 +32,6 @@ public class CaboDao {
     private int Mes;
     private int Ano;
     private TIPOS_ENTREGAS Processo;
-
     
     public CaboDao(int CodPraca, int Mes,int Ano, TIPOS_ENTREGAS Processo) {
         this.CodPraca = CodPraca;
@@ -113,7 +115,7 @@ public class CaboDao {
     
     public static void main(String[] args) throws FilloException {
         
-                CaboDao CaboDao = new CaboDao(PRACA.CAM.getCodigo(), Calendar.MARCH, 2022,TIPOS_ENTREGAS.INSTALADO);
+                CaboDao CaboDao = new CaboDao(PRACA.BHZ.getCodigo(), Calendar.MARCH, 2022,TIPOS_ENTREGAS.PROCESSADO);
 
               
             List<Cabo>Cabos = CaboDao.obterListaRetornoCabo(
@@ -123,26 +125,25 @@ public class CaboDao {
                      
               );
             
+            EntityManager em=new HibernateUtil().ConnectionFactoryJPA();
+                    em.getTransaction().begin();
+      
+                    
+                    
+
             
             Cabos.forEach(x->{
             
             
-                System.out.println
-               (
-                        x.getData()+" "+
-                        x.getComCabo()+" "
-                       +x.getSemCabo()
-                   +" "+x.getCategoria()
-                     + " " +x.getPraca()
-                
-                );
+         em.persist(x);
+        
                 
             
             });
             
             
             
-               
+            em.getTransaction().commit();   
                
                
                

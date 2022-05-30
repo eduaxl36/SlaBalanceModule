@@ -3,32 +3,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package br.com.kantar.model.variaveis;
-
-import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
-import br.com.kantar.model.abs.DESCRICOES;
-import br.com.kantar.model.abs.Variavel;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
  * @author eduax
  */
-public class Crianca extends Variavel {
+public class Crianca {
     
+    private int Id;
+    private LocalDate Data;
     private long ComCrianca;
     private long SemCrianca;
     private String Processo;
     private int CodPraca;
 
-    public Crianca() {
-    }
-
-    public Crianca(LocalDate Data,long ComCrianca, long SemCrianca,String Processo,int CodPraca) {
-        super(Data);
+    public Crianca(int Id, LocalDate Data, long ComCrianca, long SemCrianca, String Processo, int CodPraca) {
+        this.Id = Id;
+        this.Data = Data;
         this.ComCrianca = ComCrianca;
         this.SemCrianca = SemCrianca;
         this.Processo = Processo;
         this.CodPraca = CodPraca;
+    }
+
+    public Crianca(LocalDate Data, long ComCrianca, long SemCrianca, String Processo, int CodPraca) {
+        this.Data = Data;
+        this.ComCrianca = ComCrianca;
+        this.SemCrianca = SemCrianca;
+        this.Processo = Processo;
+        this.CodPraca = CodPraca;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    public LocalDate getData() {
+        return Data;
+    }
+
+    public void setData(LocalDate Data) {
+        this.Data = Data;
     }
 
     public long getComCrianca() {
@@ -63,7 +84,54 @@ public class Crianca extends Variavel {
         this.CodPraca = CodPraca;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.Data);
+        hash = 43 * hash + (int) (this.ComCrianca ^ (this.ComCrianca >>> 32));
+        hash = 43 * hash + (int) (this.SemCrianca ^ (this.SemCrianca >>> 32));
+        hash = 43 * hash + Objects.hashCode(this.Processo);
+        hash = 43 * hash + this.CodPraca;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Crianca other = (Crianca) obj;
+        if (this.ComCrianca != other.ComCrianca) {
+            return false;
+        }
+        if (this.SemCrianca != other.SemCrianca) {
+            return false;
+        }
+        if (this.CodPraca != other.CodPraca) {
+            return false;
+        }
+        if (!Objects.equals(this.Processo, other.Processo)) {
+            return false;
+        }
+        if (!Objects.equals(this.Data, other.Data)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Crianca{" + "Id=" + Id + ", Data=" + Data + ", ComCrianca=" + ComCrianca + ", SemCrianca=" + SemCrianca + ", Processo=" + Processo + ", CodPraca=" + CodPraca + '}';
+    }
     
+    
+
     
     
     

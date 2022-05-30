@@ -5,38 +5,59 @@
 package br.com.kantar.model.variaveis;
 
 import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
-import br.com.kantar.model.abs.DESCRICOES;
-import br.com.kantar.model.abs.Variavel;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
  * @author eduax
  */
-public class Idade extends Variavel {
-    
+public class Idade {
+
+    private int Id;
+    private LocalDate Data;
     private long I15;
     private long I35;
     private long I50;
-   private TIPOS_ENTREGAS Categoria;
-   private int CodPraca;
+    private TIPOS_ENTREGAS Categoria;
+    private int CodPraca;
 
-    public Idade() {
-    }
-
-    public Idade(long I15, long I35, long I50) {
+    public Idade(LocalDate Data, long I15, long I35, long I50, TIPOS_ENTREGAS Categoria, int CodPraca) {
+        this.Data = Data;
         this.I15 = I15;
         this.I35 = I35;
         this.I50 = I50;
+        this.Categoria = Categoria;
+        this.CodPraca = CodPraca;
     }
 
-    public Idade(LocalDate Data,long I15, long I35, long I50,TIPOS_ENTREGAS Categoria,int CodPraca) {
-        super(Data);
+    
+    
+    
+    public Idade(int Id, LocalDate Data, long I15, long I35, long I50, TIPOS_ENTREGAS Categoria, int CodPraca) {
+        this.Id = Id;
+        this.Data = Data;
         this.I15 = I15;
         this.I35 = I35;
         this.I50 = I50;
-        this.Categoria=Categoria;
-        this.CodPraca=CodPraca;
+        this.Categoria = Categoria;
+        this.CodPraca = CodPraca;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    public LocalDate getData() {
+        return Data;
+    }
+
+    public void setData(LocalDate Data) {
+        this.Data = Data;
     }
 
     public long getI15() {
@@ -79,7 +100,58 @@ public class Idade extends Variavel {
         this.CodPraca = CodPraca;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.Data);
+        hash = 23 * hash + (int) (this.I15 ^ (this.I15 >>> 32));
+        hash = 23 * hash + (int) (this.I35 ^ (this.I35 >>> 32));
+        hash = 23 * hash + (int) (this.I50 ^ (this.I50 >>> 32));
+        hash = 23 * hash + Objects.hashCode(this.Categoria);
+        hash = 23 * hash + this.CodPraca;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Idade other = (Idade) obj;
+        if (this.I15 != other.I15) {
+            return false;
+        }
+        if (this.I35 != other.I35) {
+            return false;
+        }
+        if (this.I50 != other.I50) {
+            return false;
+        }
+        if (this.CodPraca != other.CodPraca) {
+            return false;
+        }
+        if (!Objects.equals(this.Data, other.Data)) {
+            return false;
+        }
+        if (this.Categoria != other.Categoria) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Idade{" + "Id=" + Id + ", Data=" + Data + ", I15=" + I15 + ", I35=" + I35 + ", I50=" + I50 + ", Categoria=" + Categoria + ", CodPraca=" + CodPraca + '}';
+    }
     
     
     
+    
+
 }

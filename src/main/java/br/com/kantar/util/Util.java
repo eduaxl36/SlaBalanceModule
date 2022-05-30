@@ -4,6 +4,8 @@
  */
 package br.com.kantar.util;
 
+import br.com.kantar.dao.cf.ConfiguracoesDao;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
@@ -16,7 +18,14 @@ import java.util.List;
  */
 public class Util {
     
+    public static double CalulaTaxa(int CodPraca,int Processado,int Ano,String Item) throws IOException{
     
+            double PrevistoConvertido =   new ConfiguracoesDao().obterPrevisto(Item, CodPraca, Ano);  
+            double ProcessadoConvertido=Processado;
+            double Taxa = ProcessadoConvertido/PrevistoConvertido;
+
+            return Taxa;
+    }
 
     public static LocalDate retornoData(int Adicional,int Mes,int Ano){
       
