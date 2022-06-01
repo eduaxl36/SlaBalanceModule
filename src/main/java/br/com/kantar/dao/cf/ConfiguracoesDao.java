@@ -94,7 +94,7 @@ public long obterPrevisto(String Item,int Praca,int Ano) throws IOException{
     public static void main(String[] args) throws IOException {
         
         
-        System.out.println(new ConfiguracoesDao().obterPrevisto("1TV", 103,2022));
+        System.out.println(new ConfiguracoesDao().obterPrevisto("1 TV", 103,2022));
         
     }
 

@@ -37,6 +37,7 @@
  <groupId>org.hibernate</groupId>
  <artifactId>hibernate-core</artifactId>
  <version>5.4.12.Final</version>
+    <type>jar</type>
 </dependency>
 <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
 <dependency>
@@ -45,9 +46,12 @@
  <version>5.4.12.Final</version>
 </dependency>
 <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-
-
-
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.0.5.RELEASE</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>    
         <build>
         <sourceDirectory>src/main/java</sourceDirectory>

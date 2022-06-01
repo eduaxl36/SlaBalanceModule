@@ -19,12 +19,16 @@ public enum PRACA {
     CTA(240,"CTA","Curitiba"),
     FLO(241,"FLO","Florianopolis"),
     POA(242,"POA","Porto Alegre"),
-    FOR(357,"FOR","Fortaleza"),
+    FOR(357,"FORT","Fortaleza"),
     REC(359,"REC","Recife"),
     SAL(360,"SAL","Salvador"),
     GBE(465,"GBE","Grande Belem"),
     MAN(466,"MAN","Manaus"),
-    GVI(985,"GVI","Grande Vitoria");
+    GVI(985,"GVI","Grande Vitoria"),
+    PNT(1000,"PNT","Regioes Metropolitanas")
+    
+    
+    ;
 
     private PRACA(int Codigo,String Desc,String Regiao) {
         this.Codigo = Codigo;

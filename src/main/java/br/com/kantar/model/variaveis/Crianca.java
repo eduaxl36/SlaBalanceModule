@@ -5,21 +5,29 @@
 package br.com.kantar.model.variaveis;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author eduax
  */
-public class Crianca {
+@Entity
+public class crianca {
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int Id;
+    
     private LocalDate Data;
     private long ComCrianca;
     private long SemCrianca;
     private String Processo;
     private int CodPraca;
 
-    public Crianca(int Id, LocalDate Data, long ComCrianca, long SemCrianca, String Processo, int CodPraca) {
+    public crianca(int Id, LocalDate Data, long ComCrianca, long SemCrianca, String Processo, int CodPraca) {
         this.Id = Id;
         this.Data = Data;
         this.ComCrianca = ComCrianca;
@@ -28,7 +36,7 @@ public class Crianca {
         this.CodPraca = CodPraca;
     }
 
-    public Crianca(LocalDate Data, long ComCrianca, long SemCrianca, String Processo, int CodPraca) {
+    public crianca(LocalDate Data, long ComCrianca, long SemCrianca, String Processo, int CodPraca) {
         this.Data = Data;
         this.ComCrianca = ComCrianca;
         this.SemCrianca = SemCrianca;
@@ -36,6 +44,12 @@ public class Crianca {
         this.CodPraca = CodPraca;
     }
 
+    public crianca() {
+    }
+
+    
+    
+    
     public int getId() {
         return Id;
     }
@@ -106,7 +120,7 @@ public class Crianca {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Crianca other = (Crianca) obj;
+        final crianca other = (crianca) obj;
         if (this.ComCrianca != other.ComCrianca) {
             return false;
         }

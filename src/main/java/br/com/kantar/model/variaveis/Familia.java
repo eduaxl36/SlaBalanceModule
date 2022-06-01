@@ -6,22 +6,37 @@ package br.com.kantar.model.variaveis;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author eduax
  */
-public class Familia{
-    
-   private int Id;
-   private LocalDate Data;
-   private long T1;
-   private long T3;
-   private long T5;
-   private String Processo;
-   private int CodPraca;
+@Entity
+public class familia {
 
-    public Familia(int Id, LocalDate Data, long T1, long T3, long T5, String Processo, int CodPraca) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private int Id;
+    private LocalDate Data;
+    private long T1;
+    private long T3;
+    private long T5;
+    private String Processo;
+    private int CodPraca;
+
+    public familia() {
+    }
+
+    
+    
+    
+    
+    public familia(int Id, LocalDate Data, long T1, long T3, long T5, String Processo, int CodPraca) {
         this.Id = Id;
         this.Data = Data;
         this.T1 = T1;
@@ -31,7 +46,7 @@ public class Familia{
         this.CodPraca = CodPraca;
     }
 
-    public Familia(LocalDate Data, long T1, long T3, long T5, String Processo, int CodPraca) {
+    public familia(LocalDate Data, long T1, long T3, long T5, String Processo, int CodPraca) {
         this.Data = Data;
         this.T1 = T1;
         this.T3 = T3;
@@ -124,7 +139,7 @@ public class Familia{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Familia other = (Familia) obj;
+        final familia other = (familia) obj;
         if (this.T1 != other.T1) {
             return false;
         }
@@ -146,9 +161,4 @@ public class Familia{
         return true;
     }
 
-   
-
-
-
-   
-    }
+}

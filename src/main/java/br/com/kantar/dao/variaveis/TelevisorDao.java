@@ -5,9 +5,11 @@
 package br.com.kantar.dao.variaveis;
 
 import static br.com.kantar.connectionFactory.Connection.getConexao;
+import br.com.kantar.connectionFactory.HibernateUtil;
 import br.com.kantar.connectionFactory.PRACA;
 import static br.com.kantar.connectionFactory.PRACA.obterPraca;
 import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
+import br.com.kantar.model.variaveis.Cabo;
 import br.com.kantar.model.variaveis.Televisor;
 import br.com.kantar.util.Util;
 import static br.com.kantar.util.Util.retornoData;
@@ -19,21 +21,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import org.springframework.stereotype.Component;
 
 /**
  *
- * @author eduax
+ * @author Eduardo.Fernando
  */
+@Component
 public class TelevisorDao {
 
     private int CodPraca;
     private int Mes;
     private TIPOS_ENTREGAS Processo;
     private int Ano;
+    private EntityManager em;
 
-    
-    
-    
+    public TelevisorDao(int Mes, int Ano, EntityManager em) {
+        this.Mes = Mes;
+        this.Ano = Ano;
+        this.em = em;
+    }
+
     public TelevisorDao(int CodPraca, int Mes, int Ano, TIPOS_ENTREGAS Processo) {
         this.CodPraca = CodPraca;
         this.Mes = Mes;
@@ -41,16 +50,12 @@ public class TelevisorDao {
         this.Ano = Ano;
     }
 
-
-    public TelevisorDao() {
-    }
-
     public List<Televisor> obterListaRetornoTelevisores(List<Integer> Televisores1, List<Integer> Televisores2) throws IOException {
 
         List<Televisor> Televisores = new ArrayList();
 
         for (int i = 0; i < Televisores1.size(); i++) {
-            Televisor Televisor = new Televisor(retornoData(i+1,this.Mes,this.Ano),
+            Televisor Televisor = new Televisor(retornoData(i + 1, this.Mes, this.Ano),
                     Televisores1.get(i),
                     Televisores2.get(i), this.Processo.toString(), this.CodPraca
             );
@@ -113,30 +118,38 @@ public class TelevisorDao {
         return Televisores2;
     }
 
-    public static void main(String[] args) throws FilloException, IOException {
+    public void PersistirDadosTelevisor(PRACA Praca, TIPOS_ENTREGAS Tipo) throws FilloException, IOException {
 
-        TelevisorDao tvdao = new TelevisorDao(PRACA.CAM.getCodigo(), Calendar.APRIL, 2022,TIPOS_ENTREGAS.INSTALADO);
+        TelevisorDao TelevisorDao = new TelevisorDao(Praca.getCodigo(), this.Mes, this.Ano, Tipo);
 
-       tvdao.obterListaRetornoTelevisores(
-               tvdao.persistirPlanilhaObterTelevisores1(), 
-               tvdao.persistirPlanilhaObterTelevisores2()).forEach(
-               
-               x->{
-               
-               
-                   System.out.println(x.getData()+" "+x.getTv1()
-                                                 +" "+x.getTv2()
-                                                 +" "+x.getProcesso()+" "
-                                                 +" "+x.getCodPraca()
-                   
-                   
-                   
-                   );
-               
-               }
-               
-               
-               );
+        List<Televisor> Televisores = TelevisorDao.obterListaRetornoTelevisores(
+                TelevisorDao.persistirPlanilhaObterTelevisores1(),
+                TelevisorDao.persistirPlanilhaObterTelevisores2()
+        );
+
+        Televisores.forEach(x -> {
+
+            em.persist(x);
+
+        });
+
+    }
+
+    public void percorrerDadosSheet() throws FilloException, IOException {
+
+        PRACA[] Pracas = PRACA.values();
+        TIPOS_ENTREGAS Tipos[] = TIPOS_ENTREGAS.values();
+        EntityManager em = new HibernateUtil().ConnectionFactoryJPA();
+
+        for (PRACA praca : Pracas) {
+
+            for (TIPOS_ENTREGAS Tipo : Tipos) {
+
+                PersistirDadosTelevisor(praca, Tipo);
+
+            }
+
+        }
 
     }
 

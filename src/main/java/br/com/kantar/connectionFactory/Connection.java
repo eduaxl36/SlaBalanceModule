@@ -6,6 +6,7 @@ package br.com.kantar.connectionFactory;
 
 import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Fillo;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Connection {
         System.setProperty("ROW", "4");//Table start row
         System.setProperty("COLUMN", "2");//Table start column
         Fillo fillo = new Fillo();
+
         com.codoid.products.fillo.Connection Conexao = fillo.getConnection(Entrega.getCaminhoArquivo());
         return Conexao;
 

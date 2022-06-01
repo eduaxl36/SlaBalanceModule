@@ -8,13 +8,23 @@ package br.com.kantar.model.variaveis;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author eduax
  */
+
+@Entity
 public class Nse  {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int Id;
+    
     private LocalDate Data;
     private long Ab;
     private long C1;
@@ -23,6 +33,14 @@ public class Nse  {
     private String Processo;
     private int CodPraca;
 
+    public Nse() {
+    }
+
+    
+    
+    
+    
+    
     public Nse(int Id, LocalDate Data, long Ab, long C1, long C2, long De, String Processo, int CodPraca) {
         this.Id = Id;
         this.Data = Data;

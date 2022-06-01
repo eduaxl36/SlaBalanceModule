@@ -7,43 +7,64 @@ package br.com.kantar.model.variaveis;
 import br.com.kantar.connectionFactory.TIPOS_ENTREGAS;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
  * @author eduax
  */
-public class Idade {
 
+@Entity
+public class Idade {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int Id;
+    
     private LocalDate Data;
     private long I15;
     private long I35;
     private long I50;
-    private TIPOS_ENTREGAS Categoria;
+    private String Processo;
     private int CodPraca;
 
-    public Idade(LocalDate Data, long I15, long I35, long I50, TIPOS_ENTREGAS Categoria, int CodPraca) {
+    public Idade() {
+    }
+
+    
+    
+    
+    
+    
+    public Idade(LocalDate Data, long I15, long I35, long I50, String Categoria, int CodPraca) {
         this.Data = Data;
         this.I15 = I15;
         this.I35 = I35;
         this.I50 = I50;
-        this.Categoria = Categoria;
+        this.Processo = Categoria;
         this.CodPraca = CodPraca;
     }
 
     
     
     
-    public Idade(int Id, LocalDate Data, long I15, long I35, long I50, TIPOS_ENTREGAS Categoria, int CodPraca) {
+    public Idade(int Id, LocalDate Data, long I15, long I35, long I50, String Categoria, int CodPraca) {
         this.Id = Id;
         this.Data = Data;
         this.I15 = I15;
         this.I35 = I35;
         this.I50 = I50;
-        this.Categoria = Categoria;
+        this.Processo = Categoria;
         this.CodPraca = CodPraca;
     }
 
+    public String getProcesso() {
+        return Processo;
+    }
+
+    
     public int getId() {
         return Id;
     }
@@ -84,12 +105,12 @@ public class Idade {
         this.I50 = I50;
     }
 
-    public TIPOS_ENTREGAS getCategoria() {
-        return Categoria;
+    public String getCategoria() {
+        return Processo;
     }
 
-    public void setCategoria(TIPOS_ENTREGAS Categoria) {
-        this.Categoria = Categoria;
+    public void setCategoria(String Categoria) {
+        this.Processo = Categoria;
     }
 
     public int getCodPraca() {
@@ -107,7 +128,7 @@ public class Idade {
         hash = 23 * hash + (int) (this.I15 ^ (this.I15 >>> 32));
         hash = 23 * hash + (int) (this.I35 ^ (this.I35 >>> 32));
         hash = 23 * hash + (int) (this.I50 ^ (this.I50 >>> 32));
-        hash = 23 * hash + Objects.hashCode(this.Categoria);
+        hash = 23 * hash + Objects.hashCode(this.Processo);
         hash = 23 * hash + this.CodPraca;
         return hash;
     }
@@ -139,7 +160,7 @@ public class Idade {
         if (!Objects.equals(this.Data, other.Data)) {
             return false;
         }
-        if (this.Categoria != other.Categoria) {
+        if (this.Processo != other.Processo) {
             return false;
         }
         return true;
@@ -147,7 +168,7 @@ public class Idade {
 
     @Override
     public String toString() {
-        return "Idade{" + "Id=" + Id + ", Data=" + Data + ", I15=" + I15 + ", I35=" + I35 + ", I50=" + I50 + ", Categoria=" + Categoria + ", CodPraca=" + CodPraca + '}';
+        return "Idade{" + "Id=" + Id + ", Data=" + Data + ", I15=" + I15 + ", I35=" + I35 + ", I50=" + I50 + ", Categoria=" + Processo + ", CodPraca=" + CodPraca + '}';
     }
     
     

@@ -26,8 +26,13 @@ public class HibernateUtil {
         return em;
     
     }
+        public void  CloseConnection(){
     
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("BalanceJPA");
+              
+        emf.close();
     
+    }
     public static void main(String[] args) {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("BalanceJPA");

@@ -5,8 +5,8 @@
 package br.com.kantar.model.abs;
 
 import br.com.kantar.model.variaveis.Cabo;
-import br.com.kantar.model.variaveis.Crianca;
-import br.com.kantar.model.variaveis.Familia;
+import br.com.kantar.model.variaveis.crianca;
+import br.com.kantar.model.variaveis.familia;
 import br.com.kantar.model.variaveis.Idade;
 import br.com.kantar.model.variaveis.Nse;
 import br.com.kantar.model.variaveis.Televisor;
@@ -20,8 +20,8 @@ import java.util.Objects;
 public abstract class Categoria {
     
     private List<Cabo> Cabo;
-    private List<Crianca> Crianca;
-    private List<Familia> Familia;
+    private List<crianca> Crianca;
+    private List<familia> Familia;
     private List<Idade> Idade;
     private List<Nse> Nse;
     private List<Televisor> Televisor;
@@ -29,7 +29,7 @@ public abstract class Categoria {
     public Categoria() {
     }
 
-    public Categoria(List<Cabo> Cabo, List<Crianca> Crianca, List<Familia> Familia, List<Idade> Idade, List<Nse> Nse, List<Televisor> Televisor) {
+    public Categoria(List<Cabo> Cabo, List<crianca> Crianca, List<familia> Familia, List<Idade> Idade, List<Nse> Nse, List<Televisor> Televisor) {
         this.Cabo = Cabo;
         this.Crianca = Crianca;
         this.Familia = Familia;
@@ -46,19 +46,19 @@ public abstract class Categoria {
         this.Cabo = Cabo;
     }
 
-    public List<Crianca> getCrianca() {
+    public List<crianca> getCrianca() {
         return Crianca;
     }
 
-    public void setCrianca(List<Crianca> Crianca) {
+    public void setCrianca(List<crianca> Crianca) {
         this.Crianca = Crianca;
     }
 
-    public List<Familia> getFamilia() {
+    public List<familia> getFamilia() {
         return Familia;
     }
 
-    public void setFamilia(List<Familia> Familia) {
+    public void setFamilia(List<familia> Familia) {
         this.Familia = Familia;
     }
 
