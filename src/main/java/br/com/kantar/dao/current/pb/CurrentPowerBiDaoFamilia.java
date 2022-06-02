@@ -12,7 +12,10 @@ import br.com.kantar.model.variaveis.Cabo;
 import br.com.kantar.model.variaveis.familia;
 import static br.com.kantar.util.Util.CalulaTaxa;
 import static br.com.kantar.util.Util.retornoData;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -70,7 +73,7 @@ public class CurrentPowerBiDaoFamilia {
                     Contratados.get(i),
                     Instalados.get(i),
                     Processados.get(i),
-                    (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item));
+                    (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item,Variavel));
 
             ItensFamilia.add(ProcessoFamilia);
         }
@@ -81,7 +84,7 @@ public class CurrentPowerBiDaoFamilia {
 
     public List<CurrentPowerBiModel> AdicionaFam1_2() throws IOException {
 
-        List<familia> ItensFamilia_1_2 = this.Conexao.createQuery("from familia where CodPraca='" + this.Praca.getCodigo() + "' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<familia> ItensFamilia_1_2 = this.Conexao.createQuery("from familia where CodPraca='" + this.Praca.getCodigo() + "' and data between '2022-05-01' and '2022-05-31'").getResultList();
 
         List<Integer> Processados = new LinkedList();
         List<Integer> Contratados = new LinkedList();
@@ -104,8 +107,8 @@ public class CurrentPowerBiDaoFamilia {
             Sigla = this.Praca.getDescr();
             CodPraca = familia.getCodPraca();
             Variavel = "TAMANHO DA FAMILIA";
-            Item = "1-2 PESSOAS";
-            Previsto = (int) new ConfiguracoesDao().obterPrevisto("1-2 PESSOAS", (int) familia.getCodPraca(), this.Ano);
+            Item = "1-2 pessoas";
+            Previsto = (int) new ConfiguracoesDao().obterPrevisto(Variavel,"1-2 pessoas", (int) familia.getCodPraca(), this.Ano);
             Processado = 0;
             Instalado = 0;
             Contratado = 0;
@@ -148,7 +151,7 @@ public class CurrentPowerBiDaoFamilia {
 
     public List<CurrentPowerBiModel> AdicionaFam3_4() throws IOException {
 
-        List<familia> ItensFamilia_3_4 = this.Conexao.createQuery("from familia where CodPraca='" + this.Praca.getCodigo() + "' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<familia> ItensFamilia_3_4 = this.Conexao.createQuery("from familia where CodPraca='" + this.Praca.getCodigo() + "' and data between '2022-05-01' and '2022-05-31'").getResultList();
 
         List<Integer> Processados = new LinkedList();
         List<Integer> Contratados = new LinkedList();
@@ -171,8 +174,8 @@ public class CurrentPowerBiDaoFamilia {
             Sigla = this.Praca.getDescr();
             CodPraca = familia.getCodPraca();
             Variavel = "TAMANHO DA FAMILIA";
-            Item = "3-4 PESSOAS";
-            Previsto = (int) new ConfiguracoesDao().obterPrevisto("3-4 PESSOAS", (int) familia.getCodPraca(), this.Ano);
+            Item = "3-4 pessoas";
+            Previsto = (int) new ConfiguracoesDao().obterPrevisto(Variavel,"3-4 pessoas", (int) familia.getCodPraca(), this.Ano);
             Processado = 0;
             Instalado = 0;
             Contratado = 0;
@@ -215,7 +218,7 @@ public class CurrentPowerBiDaoFamilia {
 
     public List<CurrentPowerBiModel> AdicionaFam_5() throws IOException {
 
-        List<familia> ItensFamilia_5 = this.Conexao.createQuery("from familia where CodPraca='" + this.Praca.getCodigo() + "' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<familia> ItensFamilia_5 = this.Conexao.createQuery("from familia where CodPraca='" + this.Praca.getCodigo() + "' and data between '2022-05-01' and '2022-05-31'").getResultList();
 
         List<Integer> Processados = new LinkedList();
         List<Integer> Contratados = new LinkedList();
@@ -238,8 +241,8 @@ public class CurrentPowerBiDaoFamilia {
             Sigla = this.Praca.getDescr();
             CodPraca = familia.getCodPraca();
             Variavel = "TAMANHO DA FAMILIA";
-            Item = "5+ PESSOAS";
-            Previsto = (int) new ConfiguracoesDao().obterPrevisto("5+ PESSOAS", (int) familia.getCodPraca(), this.Ano);
+            Item = "5 E+ pessoas";
+            Previsto = (int) new ConfiguracoesDao().obterPrevisto(Variavel,"5 E+ pessoas", (int) familia.getCodPraca(), this.Ano);
             Processado = 0;
             Instalado = 0;
             Contratado = 0;
@@ -284,11 +287,23 @@ public class CurrentPowerBiDaoFamilia {
 
     public static void main(String[] args) throws IOException {
 
-        List<CurrentPowerBiModel> s = new CurrentPowerBiDaoFamilia(2022, PRACA.PNT, Calendar.APRIL).AdicionaFam1_2();
+        
+        
+                try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("c:/teste/teste.txt", true)))) {
+        
+                      br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
+             for(PRACA pr:pracas){
+             
+             
+             
+             
+             
+             
+              List<CurrentPowerBiModel> s = new CurrentPowerBiDaoFamilia(2022, pr, Calendar.MAY).AdicionaFam1_2();
 
         s.forEach(x -> {
 
-            System.out.println(
+            out.println(
                     x.getDataIbope().replaceAll("\\-", "") + ";"
                     + x.getRegiao() + ";"
                     + x.getSigla() + ";"
@@ -308,11 +323,11 @@ public class CurrentPowerBiDaoFamilia {
 
 
 
-        List<CurrentPowerBiModel> sx = new CurrentPowerBiDaoFamilia(2022, PRACA.PNT, Calendar.APRIL).AdicionaFam3_4();
+        List<CurrentPowerBiModel> sx = new CurrentPowerBiDaoFamilia(2022, pr, Calendar.MAY).AdicionaFam3_4();
 
         sx.forEach(sxs -> {
 
-            System.out.println(
+            out.println(
                     sxs.getDataIbope().replaceAll("\\-", "") + ";"
                     + sxs.getRegiao() + ";"
                     + sxs.getSigla() + ";"
@@ -332,11 +347,11 @@ public class CurrentPowerBiDaoFamilia {
         
         
         
-           List<CurrentPowerBiModel> sxx = new CurrentPowerBiDaoFamilia(2022, PRACA.PNT, Calendar.APRIL).AdicionaFam_5();
+           List<CurrentPowerBiModel> sxx = new CurrentPowerBiDaoFamilia(2022, pr, Calendar.MAY).AdicionaFam_5();
 
         sxx.forEach(sxs -> {
 
-            System.out.println(
+           out.println(
                     sxs.getDataIbope().replaceAll("\\-", "") + ";"
                     + sxs.getRegiao() + ";"
                     + sxs.getSigla() + ";"
@@ -350,7 +365,51 @@ public class CurrentPowerBiDaoFamilia {
                     + String.valueOf(sxs.getTaxa()).replaceAll("\\.", ",")
             );
 
-        });     
+        });
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            
         
         
         

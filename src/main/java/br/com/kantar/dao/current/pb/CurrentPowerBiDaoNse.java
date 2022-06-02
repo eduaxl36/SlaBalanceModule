@@ -11,7 +11,10 @@ import br.com.kantar.model.current.pb.CurrentPowerBiModel;
 import br.com.kantar.model.variaveis.Nse;
 import static br.com.kantar.util.Util.CalulaTaxa;
 import static br.com.kantar.util.Util.retornoData;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -64,7 +67,7 @@ public class CurrentPowerBiDaoNse {
            Contratados.get(i),
            Instalados.get(i),
            Processados.get(i), 
-           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item));
+           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item,Variavel));
             
             Itens.add(ProcessoNse); 
         }
@@ -76,7 +79,7 @@ public class CurrentPowerBiDaoNse {
    public List<CurrentPowerBiModel>obterSintoniaAB() throws IOException{
      
 
-        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -103,7 +106,7 @@ public class CurrentPowerBiDaoNse {
             CodPraca =  nse.getCodPraca();
             Variavel ="NSE";
             Item="AB";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("AB", (int) nse.getCodPraca(), this.Ano);
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"AB", (int) nse.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -161,7 +164,7 @@ public class CurrentPowerBiDaoNse {
     public List<CurrentPowerBiModel>obterSintoniaC1() throws IOException{
      
 
-        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -188,7 +191,7 @@ public class CurrentPowerBiDaoNse {
             CodPraca =  nse.getCodPraca();
             Variavel ="NSE";
             Item="C1";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("C1", (int) nse.getCodPraca(), this.Ano);
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"C1", (int) nse.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -246,7 +249,7 @@ public class CurrentPowerBiDaoNse {
     public List<CurrentPowerBiModel>obterSintoniaC2() throws IOException{
      
 
-        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -273,7 +276,7 @@ public class CurrentPowerBiDaoNse {
             CodPraca =  nse.getCodPraca();
             Variavel ="NSE";
             Item="C2";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("C2", (int) nse.getCodPraca(), this.Ano);
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"C2", (int) nse.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -330,7 +333,7 @@ public class CurrentPowerBiDaoNse {
     public List<CurrentPowerBiModel>obterSintoniaDE() throws IOException{
      
 
-        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<Nse>ItensAb=this.Conexao.createQuery("from Nse where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -357,7 +360,7 @@ public class CurrentPowerBiDaoNse {
             CodPraca =  nse.getCodPraca();
             Variavel ="NSE";
             Item="DE";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("DE", (int) nse.getCodPraca(), this.Ano);
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"DE", (int) nse.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -413,15 +416,24 @@ public class CurrentPowerBiDaoNse {
     
     public static void main(String[] args) throws Exception {
         
+        
+                        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("c:/teste/teste.txt", true)))) {
+        
+                      br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
+             for(PRACA pr:pracas){
+             
+             
+             
+        
 
-        List<CurrentPowerBiModel>abs =new CurrentPowerBiDaoNse(2022,PRACA.CAM,Calendar.APRIL).obterSintoniaAB();
+        List<CurrentPowerBiModel>abs =new CurrentPowerBiDaoNse(2022,pr,Calendar.MAY).obterSintoniaAB();
         
        
         abs.forEach(x->{
         
         
             
-            System.out.println(
+            out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -446,14 +458,14 @@ public class CurrentPowerBiDaoNse {
         
 
 
-   List<CurrentPowerBiModel>c1s =new CurrentPowerBiDaoNse(2022,PRACA.CAM,Calendar.APRIL).obterSintoniaC1();
+   List<CurrentPowerBiModel>c1s =new CurrentPowerBiDaoNse(2022,pr,Calendar.MAY).obterSintoniaC1();
         
        
         c1s.forEach(x->{
         
         
             
-            System.out.println(
+            out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -480,14 +492,14 @@ public class CurrentPowerBiDaoNse {
 
 
 
- List<CurrentPowerBiModel>c2s =new CurrentPowerBiDaoNse(2022,PRACA.CAM,Calendar.APRIL).obterSintoniaC2();
+ List<CurrentPowerBiModel>c2s =new CurrentPowerBiDaoNse(2022,pr,Calendar.MAY).obterSintoniaC2();
         
        
         c2s.forEach(x->{
         
         
             
-            System.out.println(
+            out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -513,14 +525,14 @@ public class CurrentPowerBiDaoNse {
 
 
 
- List<CurrentPowerBiModel>des =new CurrentPowerBiDaoNse(2022,PRACA.CAM,Calendar.APRIL).obterSintoniaDE();
+ List<CurrentPowerBiModel>des =new CurrentPowerBiDaoNse(2022,pr,Calendar.MAY).obterSintoniaDE();
         
        
         des.forEach(x->{
         
         
             
-            System.out.println(
+           out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -539,6 +551,23 @@ public class CurrentPowerBiDaoNse {
             );
         
         });
+             
+             
+             }
+                        
+                        
+                        
+                        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 
 

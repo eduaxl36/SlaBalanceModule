@@ -11,6 +11,9 @@ import br.com.kantar.model.current.pb.CurrentPowerBiModel;
 import br.com.kantar.model.variaveis.Idade;
 import static br.com.kantar.util.Util.CalulaTaxa;
 import static br.com.kantar.util.Util.retornoData;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -78,7 +82,7 @@ public class CurrentPowerBiDaoIdade {
            Contratados.get(i),
            Instalados.get(i),
            Processados.get(i), 
-           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item));
+           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item,Variavel));
             
             ItensIdade.add(ProcessoIdade); 
         }
@@ -116,8 +120,8 @@ public class CurrentPowerBiDaoIdade {
             Sigla = this.Praca.getDescr();
             CodPraca =  idade.getCodPraca();
             Variavel ="IDADE DA DC";
-            Item="15-34";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("15-34", (int) idade.getCodPraca(), this.Ano);
+            Item="15-34 anos";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"15-34 anos", (int) idade.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -197,8 +201,8 @@ public class CurrentPowerBiDaoIdade {
             Sigla = this.Praca.getDescr();
             CodPraca =  idade.getCodPraca();
             Variavel ="IDADE DA DC";
-            Item="35-49";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("35-49", (int) idade.getCodPraca(), this.Ano);
+            Item="35-49 anos";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"35-49 anos", (int) idade.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -282,8 +286,8 @@ public class CurrentPowerBiDaoIdade {
             Sigla = this.Praca.getDescr();
             CodPraca =  idade.getCodPraca();
             Variavel ="IDADE DA DC";
-            Item="50+";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("50+", (int) idade.getCodPraca(), this.Ano);
+            Item="50+ anos";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"50+ anos", (int) idade.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -346,16 +350,13 @@ public class CurrentPowerBiDaoIdade {
         
 
         
-        PrintWriter pw = new PrintWriter("c:/teste/teste.txt");
-        
-        
-        br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
+      try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("c:/teste/teste.txt", true)))) {
+      
+              br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
         
         for(PRACA pr:pracas){
         
-
-        
-        
+              
         List<CurrentPowerBiModel>s =new CurrentPowerBiDaoIdade(2022,pr,Calendar.MAY).AdicionaIdade15_34();
         
        
@@ -363,7 +364,7 @@ public class CurrentPowerBiDaoIdade {
         
         
             
-            pw.println(
+            out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -392,7 +393,7 @@ public class CurrentPowerBiDaoIdade {
         
         
             
-            pw.println(
+            out.println(
                     
                     
                     sxs.getDataIbope().replaceAll("\\-", "")+";"+
@@ -428,7 +429,7 @@ public class CurrentPowerBiDaoIdade {
         
         
             
-            pw.println(
+            out.println(
                     
                     
                     sxs.getDataIbope().replaceAll("\\-", "")+";"+
@@ -449,6 +450,24 @@ public class CurrentPowerBiDaoIdade {
         });          
         
         
+        }
+      
+      
+      }
+      catch(Exception e){
+      
+      
+          JOptionPane.showMessageDialog(null, e);
+      
+      }
+        
+        
+
+        
+
+        
+  
+        
         
        
         
@@ -465,9 +484,8 @@ public class CurrentPowerBiDaoIdade {
        
         
         
-        pw.close();
-        
-    }
+  
+    
     
     
     

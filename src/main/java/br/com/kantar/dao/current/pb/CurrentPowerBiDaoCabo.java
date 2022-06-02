@@ -11,13 +11,18 @@ import br.com.kantar.model.current.pb.CurrentPowerBiModel;
 import br.com.kantar.model.variaveis.Cabo;
 import static br.com.kantar.util.Util.CalulaTaxa;
 import static br.com.kantar.util.Util.retornoData;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -78,7 +83,7 @@ public class CurrentPowerBiDaoCabo {
            Contratados.get(i),
            Instalados.get(i),
            Processados.get(i), 
-           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item));
+           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item,Variavel));
             
             ItensCaboRet.add(ProcessoTemCabo); 
         }
@@ -90,7 +95,7 @@ public class CurrentPowerBiDaoCabo {
    public List<CurrentPowerBiModel>AdicionaNaoTemCabo() throws IOException{
      
 
-        List<Cabo>ItensCabo=this.Conexao.createQuery("from Cabo where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<Cabo>ItensCabo=this.Conexao.createQuery("from Cabo where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -116,8 +121,8 @@ public class CurrentPowerBiDaoCabo {
             Sigla = this.Praca.getDescr();
             CodPraca =  cabo.getCodPraca();
             Variavel ="TV PAGA";
-            Item="PAY NAO TEM";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("PAY NAO TEM", (int) cabo.getCodPraca(), this.Ano);
+            Item="NAO TEM";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto("TV PAGA","NAO TEM", (int) cabo.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -170,13 +175,8 @@ public class CurrentPowerBiDaoCabo {
    
     public List<CurrentPowerBiModel>AdicionaTemCabo() throws IOException{
      
-
-//        Query query = session.createQuery(
-//    "SELECT d FROM Deal d WHERE d.status=:o or d.status=:a");
-//query.setParameter("a", MyEnum.A);
-//query.setParameter("o", MyEnum.O);
-        
-        List<Cabo>ItensCabo=this.Conexao.createQuery("from Cabo WHERE CodPraca='"+this.Praca.getCodigo()+"'").getResultList();
+     
+        List<Cabo>ItensCabo=this.Conexao.createQuery("from Cabo where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -202,8 +202,9 @@ public class CurrentPowerBiDaoCabo {
             Sigla = this.Praca.getDescr();
             CodPraca =  cabo.getCodPraca();
             Variavel ="TV PAGA";
-            Item="PAY TEM";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("PAY TEM", (int) cabo.getCodPraca(), this.Ano);
+            Item="TEM";
+                     
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto("TV PAGA","TEM", (int) cabo.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -257,15 +258,50 @@ public class CurrentPowerBiDaoCabo {
     
     public static void main(String[] args) throws IOException {
         
-
-        List<CurrentPowerBiModel>s =new CurrentPowerBiDaoCabo(2022,PRACA.PNT,Calendar.APRIL).AdicionaNaoTemCabo();
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("c:/teste/teste.txt", true)))) {
+   
+              br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
+             for(PRACA pr:pracas){
+        
+        
+      
+        
+            List<CurrentPowerBiModel>s =new CurrentPowerBiDaoCabo(2022,pr,Calendar.MAY).AdicionaTemCabo();
         
        
         s.forEach(x->{
         
         
             
-            System.out.println(
+            out.println(
+                    
+                    
+                    x.getDataIbope().replaceAll("\\-", "")+";"+
+                    x.getRegiao()+";"+
+                    x.getSigla()+";"+
+                    x.getCodPraca()+";"+
+                    x.getVariavel()+";"+
+                    x.getItem()+";"+
+                    x.getPrevisoProcessado()+";"+
+                    x.getContratado()+";"+            
+                    x.getInstalado()+";"+            
+                    x.getProcesado()+";"+
+                    String.valueOf(x.getTaxa()).replaceAll("\\.",",")
+                                           
+                            
+            );
+        
+        });
+//        
+      
+       List<CurrentPowerBiModel>sc =new CurrentPowerBiDaoCabo(2022,pr,Calendar.MAY).AdicionaNaoTemCabo();
+        
+       
+        sc.forEach(x->{
+        
+        
+            
+            out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -286,34 +322,18 @@ public class CurrentPowerBiDaoCabo {
         });
 //        
         
-        
-        List<CurrentPowerBiModel>sx =new CurrentPowerBiDaoCabo(2022,PRACA.PNT,Calendar.APRIL).AdicionaTemCabo();
-        
        
-        s.forEach(sxs->{
-        
-        
+        }
             
-            System.out.println(
-                    
-                    
-                    sxs.getDataIbope().replaceAll("\\-", "")+";"+
-                    sxs.getRegiao()+";"+
-                    sxs.getSigla()+";"+
-                    sxs.getCodPraca()+";"+
-                    sxs.getVariavel()+";"+
-                    sxs.getItem()+";"+
-                    sxs.getPrevisoProcessado()+";"+
-                    sxs.getContratado()+";"+            
-                    sxs.getInstalado()+";"+            
-                    sxs.getProcesado()+";"+
-                    String.valueOf(sxs.getTaxa()).replaceAll("\\.",",")
-                                           
-                            
-            );
+            
+            
+            
+}catch (IOException e) {
+    System.err.println(e);
+}
         
-        });    
-    
+        
+   
         
     }
     

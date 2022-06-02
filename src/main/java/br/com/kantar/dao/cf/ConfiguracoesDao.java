@@ -71,7 +71,7 @@ return Configuracoes;
 
 
 
-public long obterPrevisto(String Item,int Praca,int Ano) throws IOException{
+public long obterPrevisto(String Variavel,String Item,int Praca,int Ano) throws IOException{
 
    
     
@@ -80,6 +80,7 @@ public long obterPrevisto(String Item,int Praca,int Ano) throws IOException{
             .stream()
             .filter(x->x.getCodPraca()==Praca)
             .filter(x->x.getAno()==Ano)
+            .filter(x->x.getVariavel().equals(Variavel))
             .filter(x->x.getItem().equals(Item))
             .collect(Collectors.toList());
             
@@ -94,7 +95,7 @@ public long obterPrevisto(String Item,int Praca,int Ano) throws IOException{
     public static void main(String[] args) throws IOException {
         
         
-        System.out.println(new ConfiguracoesDao().obterPrevisto("1 TV", 103,2022));
+        System.out.println(new ConfiguracoesDao().obterPrevisto("TV PAGA","TEM", 103,2022));
         
     }
 

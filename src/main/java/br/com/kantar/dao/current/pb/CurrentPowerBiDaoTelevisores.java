@@ -12,7 +12,10 @@ import br.com.kantar.model.variaveis.Cabo;
 import br.com.kantar.model.variaveis.Televisor;
 import static br.com.kantar.util.Util.CalulaTaxa;
 import static br.com.kantar.util.Util.retornoData;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -66,7 +69,7 @@ public class CurrentPowerBiDaoTelevisores {
            Contratados.get(i),
            Instalados.get(i),
            Processados.get(i), 
-           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item));
+           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item,Variavel));
             
             Itens.add(ProcessoTv1); 
         }
@@ -78,7 +81,7 @@ public class CurrentPowerBiDaoTelevisores {
    public List<CurrentPowerBiModel>obterSintoniaTv1() throws IOException{
      
 
-        List<Televisor>ItensTv1=this.Conexao.createQuery("from Televisor where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<Televisor>ItensTv1=this.Conexao.createQuery("from Televisor where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -104,8 +107,8 @@ public class CurrentPowerBiDaoTelevisores {
             Sigla = this.Praca.getDescr();
             CodPraca =  televisor.getCodPraca();
             Variavel ="QTD TVS";
-            Item="1TV";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("1TV", (int) televisor.getCodPraca(), this.Ano);
+            Item="1 TV";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"1 TV", (int) televisor.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -164,7 +167,7 @@ public class CurrentPowerBiDaoTelevisores {
 //query.setParameter("a", MyEnum.A);
 //query.setParameter("o", MyEnum.O);
         
-        List<Televisor>ItensTelevisor=this.Conexao.createQuery("from Televisor WHERE CodPraca='"+this.Praca.getCodigo()+"'").getResultList();
+         List<Televisor>ItensTv2=this.Conexao.createQuery("from Televisor where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -183,15 +186,15 @@ public class CurrentPowerBiDaoTelevisores {
         double Taxa=0;
         
         
-        for(Televisor televisor:ItensTelevisor){
+        for(Televisor televisor:ItensTv2){
         
             
             Regiao = PRACA.obterRegiao(televisor.getCodPraca());
             Sigla = this.Praca.getDescr();
             CodPraca =  televisor.getCodPraca();
             Variavel ="QTD TVS";
-            Item="2TV";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("2TV", (int) televisor.getCodPraca(), this.Ano);
+            Item="2+ TVS";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"2+ TVS", (int) televisor.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -246,14 +249,21 @@ public class CurrentPowerBiDaoTelevisores {
     public static void main(String[] args) throws IOException {
         
 
-        List<CurrentPowerBiModel>s =new CurrentPowerBiDaoTelevisores(2022,PRACA.CAM,Calendar.APRIL).obterSintoniaTv1();
+                                try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("c:/teste/teste.txt", true)))) {
+        
+                      br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
+             for(PRACA pr:pracas){
+             
+             
+                 
+        List<CurrentPowerBiModel>s =new CurrentPowerBiDaoTelevisores(2022,pr,Calendar.MAY).obterSintoniaTv1();
         
        
         s.forEach(x->{
         
         
             
-            System.out.println(
+            out.println(
                     
                     
                     x.getDataIbope().replaceAll("\\-", "")+";"+
@@ -275,14 +285,14 @@ public class CurrentPowerBiDaoTelevisores {
 //        
         
         
-        List<CurrentPowerBiModel>sx =new CurrentPowerBiDaoTelevisores(2022,PRACA.PNT,Calendar.APRIL).obterSintoniaTv2();
+        List<CurrentPowerBiModel>sx =new CurrentPowerBiDaoTelevisores(2022,pr,Calendar.MAY).obterSintoniaTv2();
         
        
         sx.forEach(sxs->{
         
         
             
-            System.out.println(
+           out.println(
                     
                     
                     sxs.getDataIbope().replaceAll("\\-", "")+";"+
@@ -300,7 +310,17 @@ public class CurrentPowerBiDaoTelevisores {
                             
             );
         
-        });    
+        });  
+             
+             
+             
+             }
+                                
+                                
+                                }
+        
+        
+      
     
         
     }

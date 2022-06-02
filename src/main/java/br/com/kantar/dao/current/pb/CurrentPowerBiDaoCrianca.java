@@ -12,7 +12,10 @@ import br.com.kantar.model.variaveis.Cabo;
 import br.com.kantar.model.variaveis.crianca;
 import static br.com.kantar.util.Util.CalulaTaxa;
 import static br.com.kantar.util.Util.retornoData;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -78,7 +81,7 @@ public class CurrentPowerBiDaoCrianca {
            Contratados.get(i),
            Instalados.get(i),
            Processados.get(i), 
-           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item));
+           (float) CalulaTaxa(CodPraca, Processados.get(i), Ano, Item,Variavel));
             
            ItensCrianca.add(ProcessoCrianca); 
         }
@@ -91,7 +94,7 @@ public class CurrentPowerBiDaoCrianca {
    public List<CurrentPowerBiModel>AdicionaTemCrianca() throws IOException{
      
 
-        List<crianca>ItensCrianca=this.Conexao.createQuery("from crianca where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<crianca>ItensCrianca=this.Conexao.createQuery("from crianca where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -117,8 +120,8 @@ public class CurrentPowerBiDaoCrianca {
             Sigla = this.Praca.getDescr();
             CodPraca =  crianca.getCodPraca();
             Variavel ="PRESENCA DE CRIANCA";
-            Item="CRIANCA TEM";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("CRIANCA TEM", (int) crianca.getCodPraca(), this.Ano);
+            Item="TEM";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"TEM", (int) crianca.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -173,7 +176,7 @@ public class CurrentPowerBiDaoCrianca {
      
         
        
-        List<crianca>ItensCrianca=this.Conexao.createQuery("from crianca where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-04-01' and '2022-04-30'").getResultList();
+        List<crianca>ItensCrianca=this.Conexao.createQuery("from crianca where CodPraca='"+this.Praca.getCodigo()+"' and data between '2022-05-01' and '2022-05-31'").getResultList();
         
         List<Integer>Processados = new LinkedList();
         List<Integer>Contratados = new LinkedList();
@@ -199,8 +202,8 @@ public class CurrentPowerBiDaoCrianca {
             Sigla = this.Praca.getDescr();
             CodPraca =  crianca.getCodPraca();
             Variavel ="PRESENCA DE CRIANCA";
-            Item="CRIANCA NAO TEM";
-            Previsto=(int) new ConfiguracoesDao().obterPrevisto("CRIANCA NAO TEM", (int) crianca.getCodPraca(), this.Ano);
+            Item="NAO TEM";
+            Previsto=(int) new ConfiguracoesDao().obterPrevisto(Variavel,"NAO TEM", (int) crianca.getCodPraca(), this.Ano);
             Processado=0;
             Instalado=0;
             Contratado=0;
@@ -256,43 +259,22 @@ public class CurrentPowerBiDaoCrianca {
     public static void main(String[] args) throws IOException {
         
 
-//        List<CurrentPowerBiModel>s =new CurrentPowerBiDaoCrianca(2022,PRACA.PNT,Calendar.APRIL).AdicionaTemCrianca();
-//        
-//       
-//        s.forEach(x->{
-//        
-//        
-//            
-//            System.out.println(
-//                    
-//                    
-//                    x.getDataIbope().replaceAll("\\-", "")+";"+
-//                    x.getRegiao()+";"+
-//                    x.getSigla()+";"+
-//                    x.getCodPraca()+";"+
-//                    x.getVariavel()+";"+
-//                    x.getItem()+";"+
-//                    x.getPrevisoProcessado()+";"+
-//                    x.getContratado()+";"+            
-//                    x.getInstalado()+";"+            
-//                    x.getProcesado()+";"+
-//                    String.valueOf(x.getTaxa()).replaceAll("\\.",",")
-//                                           
-//                            
-//            );
-//        
-//        });
-//        
         
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("c:/teste/teste.txt", true)))) {
         
-        List<CurrentPowerBiModel>sx =new CurrentPowerBiDaoCrianca(2022,PRACA.PNT,Calendar.APRIL).AdicionaNaoTemCrianca();
+                      br.com.kantar.connectionFactory.PRACA pracas[]=PRACA.values();
+             for(PRACA pr:pracas){
+             
+             
+             
+             
+                     List<CurrentPowerBiModel>sx =new CurrentPowerBiDaoCrianca(2022,pr,Calendar.APRIL).AdicionaNaoTemCrianca();
         
        
         sx.forEach(sxs->{
         
         
-            
-            System.out.println(
+            out.println(
                     
                     
                     sxs.getDataIbope().replaceAll("\\-", "")+";"+
@@ -312,6 +294,56 @@ public class CurrentPowerBiDaoCrianca {
         
         });    
     
+             
+             
+             
+                          List<CurrentPowerBiModel>sxx =new CurrentPowerBiDaoCrianca(2022,pr,Calendar.APRIL).AdicionaTemCrianca();
+        
+       
+        sxx.forEach(sxs->{
+        
+        
+            
+           out.println(
+                    
+                    
+                    sxs.getDataIbope().replaceAll("\\-", "")+";"+
+                    sxs.getRegiao()+";"+
+                    sxs.getSigla()+";"+
+                    sxs.getCodPraca()+";"+
+                    sxs.getVariavel()+";"+
+                    sxs.getItem()+";"+
+                    sxs.getPrevisoProcessado()+";"+
+                    sxs.getContratado()+";"+            
+                    sxs.getInstalado()+";"+            
+                    sxs.getProcesado()+";"+
+                    String.valueOf(sxs.getTaxa()).replaceAll("\\.",",")
+                                           
+                            
+            );
+        
+        });         
+             
+             
+             
+             
+             
+             
+             }
+        
+        
+        
+        }
+        catch(Exception e){
+        
+        
+            System.out.println(e);
+        
+        }
+        
+        
+        
+
         
     }
     

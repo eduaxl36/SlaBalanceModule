@@ -20,9 +20,9 @@ import javax.swing.JOptionPane;
  */
 public class Util {
 
-    public static double CalulaTaxa(int CodPraca, int Processado, int Ano, String Item) throws IOException {
+    public static double CalulaTaxa(int CodPraca, int Processado, int Ano, String Item,String Variavel) throws IOException {
 
-        double PrevistoConvertido = new ConfiguracoesDao().obterPrevisto(Item, CodPraca, Ano);
+        double PrevistoConvertido = new ConfiguracoesDao().obterPrevisto(Variavel,Item, CodPraca, Ano);
         double ProcessadoConvertido = Processado;
         double Taxa = ProcessadoConvertido / PrevistoConvertido;
 
