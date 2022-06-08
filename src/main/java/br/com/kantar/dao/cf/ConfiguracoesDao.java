@@ -95,7 +95,7 @@ public long obterPrevisto(String Variavel,String Item,int Praca,int Ano) throws 
     public static void main(String[] args) throws IOException {
         
         
-        System.out.println(new ConfiguracoesDao().obterPrevisto("TV PAGA","TEM", 103,2022));
+        System.out.println(new ConfiguracoesDao().obterPrevisto("TAMANHO DA FAMILIA","5 E+ pessoas", 103,2022));
         
     }
 
