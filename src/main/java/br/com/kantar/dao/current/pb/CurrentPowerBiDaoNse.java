@@ -23,7 +23,6 @@ import java.util.*;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,20 +42,21 @@ public class CurrentPowerBiDaoNse {
     private final String Item4 = "DE";
     private final String OutPrint = "c:/teste/teste.csv";
 
-    public CurrentPowerBiDaoNse(int Ano, int Mes) {
+    public CurrentPowerBiDaoNse(int Ano, int Mes, EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Mes = Mes;
+        this.Conexao = Conexao;
 
     }
 
-    public CurrentPowerBiDaoNse(int Ano, PRACA Praca, int Mes) {
+    public CurrentPowerBiDaoNse(int Ano, PRACA Praca, int Mes, EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Praca = Praca;
         this.Mes = Mes;
 
-        Conexao = new HibernateUtil().ConnectionFactoryJPA();
+        this.Conexao = Conexao;
 
     }
 
@@ -136,7 +136,7 @@ public class CurrentPowerBiDaoNse {
             }
 
         }
-  this.Conexao.close();
+
         return agregarListaNse(
                 this.Ano,
                 Regiao,
@@ -154,7 +154,6 @@ public class CurrentPowerBiDaoNse {
 
     public List<CurrentPowerBiModel> retornaListaC1() throws IOException {
 
-             
         List<Nse> ItensC1 = this.Conexao.createQuery("from Nse where CodPraca='" + this.Praca.getCodigo() + "' and data between '" + PrimeiroDiaMes(this.Ano, this.Mes) + "' and '" + UltimoDiaMes(this.Ano, this.Mes) + "'").getResultList();
 
         List<Integer> Processados = new LinkedList();
@@ -200,7 +199,7 @@ public class CurrentPowerBiDaoNse {
             }
 
         }
-  this.Conexao.close();
+
         return agregarListaNse(
                 this.Ano,
                 Regiao,
@@ -262,7 +261,7 @@ public class CurrentPowerBiDaoNse {
             }
 
         }
-  this.Conexao.close();
+
         return agregarListaNse(
                 this.Ano,
                 Regiao,
@@ -325,7 +324,7 @@ public class CurrentPowerBiDaoNse {
             }
 
         }
-  this.Conexao.close();
+
         return agregarListaNse(
                 this.Ano,
                 Regiao,
@@ -341,8 +340,6 @@ public class CurrentPowerBiDaoNse {
 
     }
 
-    
-    
     public void printDataNseAb() throws IOException {
 
         try ( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.OutPrint, true)))) {
@@ -350,11 +347,11 @@ public class CurrentPowerBiDaoNse {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-             List<CurrentPowerBiModel>NsesAb =new CurrentPowerBiDaoNse(this.Ano,Pracas,this.Mes).retornaListaAB();
+                List<CurrentPowerBiModel> NsesAb = new CurrentPowerBiDaoNse(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaAB();
                 NsesAb.forEach(Sintonias -> {
 
                     out.println(
-                              Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
+                            Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
                             + Sintonias.getRegiao() + ";"
                             + Sintonias.getSigla() + ";"
                             + Sintonias.getCodPraca() + ";"
@@ -374,21 +371,19 @@ public class CurrentPowerBiDaoNse {
         }
 
     }
-    
-    
-    
-     public void printDataNseC1() throws IOException {
+
+    public void printDataNseC1() throws IOException {
 
         try ( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.OutPrint, true)))) {
 
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-             List<CurrentPowerBiModel>NsesC1 =new CurrentPowerBiDaoNse(this.Ano,Pracas,this.Mes).retornaListaC1();
+                List<CurrentPowerBiModel> NsesC1 = new CurrentPowerBiDaoNse(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaC1();
                 NsesC1.forEach(Sintonias -> {
 
                     out.println(
-                              Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
+                            Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
                             + Sintonias.getRegiao() + ";"
                             + Sintonias.getSigla() + ";"
                             + Sintonias.getCodPraca() + ";"
@@ -408,23 +403,19 @@ public class CurrentPowerBiDaoNse {
         }
 
     }
-    
-    
-     
-     
-     
-     public void printDataNseC2() throws IOException {
+
+    public void printDataNseC2() throws IOException {
 
         try ( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.OutPrint, true)))) {
 
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-             List<CurrentPowerBiModel>NsesC2 =new CurrentPowerBiDaoNse(this.Ano,Pracas,this.Mes).retornaListaC2();
+                List<CurrentPowerBiModel> NsesC2 = new CurrentPowerBiDaoNse(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaC2();
                 NsesC2.forEach(Sintonias -> {
 
                     out.println(
-                              Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
+                            Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
                             + Sintonias.getRegiao() + ";"
                             + Sintonias.getSigla() + ";"
                             + Sintonias.getCodPraca() + ";"
@@ -444,22 +435,19 @@ public class CurrentPowerBiDaoNse {
         }
 
     }
-     
-     
-     
 
-     public void printDataNseDe() throws IOException {
+    public void printDataNseDe() throws IOException {
 
         try ( PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(this.OutPrint, true)))) {
 
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-             List<CurrentPowerBiModel>NsesDe =new CurrentPowerBiDaoNse(this.Ano,Pracas,this.Mes).retornaListaDe();
+                List<CurrentPowerBiModel> NsesDe = new CurrentPowerBiDaoNse(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaDe();
                 NsesDe.forEach(Sintonias -> {
 
                     out.println(
-                              Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
+                            Sintonias.getDataIbope().replaceAll("\\-", "") + ";"
                             + Sintonias.getRegiao() + ";"
                             + Sintonias.getSigla() + ";"
                             + Sintonias.getCodPraca() + ";"
@@ -479,28 +467,8 @@ public class CurrentPowerBiDaoNse {
         }
 
     }
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-    
+
 //   
-    public static void main(String[] args) throws Exception {
 
-            new CurrentPowerBiDaoNse(2022, Calendar.APRIL).printDataNseAb();
-            new CurrentPowerBiDaoNse(2022, Calendar.APRIL).printDataNseC1();
-          new CurrentPowerBiDaoNse(2022, Calendar.APRIL).printDataNseC2();
-          new CurrentPowerBiDaoNse(2022, Calendar.APRIL).printDataNseDe();
-       
-
-    }
 
 }

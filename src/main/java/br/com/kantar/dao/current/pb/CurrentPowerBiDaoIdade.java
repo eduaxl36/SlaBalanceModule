@@ -36,26 +36,25 @@ public class CurrentPowerBiDaoIdade {
     private final String Variavel = "IDADE DA DC";
     private final String Item1 = "15-34 anos";
     private final String Item2 = "35-49 anos";
-    private final String Item3 = "50+ anos";
+    private final String Item3 = "50 E+ anos";
     private final String OutPrint = "c:/teste/teste.csv";
-
+   
     
-        public CurrentPowerBiDaoIdade(int Ano, int Mes) {
+        public CurrentPowerBiDaoIdade(int Ano, int Mes,EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Mes = Mes;
-
+        this.Conexao = Conexao;
 
     }
     
-    public CurrentPowerBiDaoIdade(int Ano, PRACA Praca, int Mes) {
+    public CurrentPowerBiDaoIdade(int Ano, PRACA Praca, int Mes,EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Praca = Praca;
         this.Mes = Mes;
-
-        Conexao = new HibernateUtil().ConnectionFactoryJPA();
-
+        this.Conexao = Conexao;
+        
     }
 
     List<CurrentPowerBiModel> agregarListaIdade(
@@ -92,7 +91,7 @@ public class CurrentPowerBiDaoIdade {
 
             ItensIdade.add(ProcessoIdade);
         }
-  this.Conexao.close();
+
         return ItensIdade;
 
     }
@@ -144,7 +143,7 @@ public class CurrentPowerBiDaoIdade {
             }
 
         }
-  this.Conexao.close();
+
         return agregarListaIdade(
                 this.Ano,
                 Regiao,
@@ -213,7 +212,7 @@ public class CurrentPowerBiDaoIdade {
             
            
         }
-  this.Conexao.close();
+
         return agregarListaIdade(
                 this.Ano,
                 Regiao,
@@ -276,7 +275,7 @@ public class CurrentPowerBiDaoIdade {
             }
 
         }
-  this.Conexao.close();
+  
         return agregarListaIdade(
                 this.Ano,
                 Regiao,
@@ -301,7 +300,7 @@ public class CurrentPowerBiDaoIdade {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-              List<CurrentPowerBiModel> Idades15_34 = new CurrentPowerBiDaoIdade(this.Ano, Pracas, this.Mes).retornaListaIdade_15_34();
+              List<CurrentPowerBiModel> Idades15_34 = new CurrentPowerBiDaoIdade(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaIdade_15_34();
                 Idades15_34.forEach(Sintonias -> {
 
                     out.println(
@@ -337,7 +336,7 @@ public class CurrentPowerBiDaoIdade {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-              List<CurrentPowerBiModel> Idades35_49 = new CurrentPowerBiDaoIdade(this.Ano, Pracas, this.Mes).retornaListaIdade35_49();
+              List<CurrentPowerBiModel> Idades35_49 = new CurrentPowerBiDaoIdade(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaIdade35_49();
                 Idades35_49.forEach(Sintonias -> {
 
                     out.println(
@@ -374,7 +373,7 @@ public class CurrentPowerBiDaoIdade {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-              List<CurrentPowerBiModel> Idades_50 = new CurrentPowerBiDaoIdade(this.Ano, Pracas, this.Mes).retornaListaIdade_50();
+              List<CurrentPowerBiModel> Idades_50 = new CurrentPowerBiDaoIdade(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaIdade_50();
                 Idades_50.forEach(Sintonias -> {
 
                     out.println(
@@ -399,34 +398,6 @@ public class CurrentPowerBiDaoIdade {
 
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public static void main(String[] args) throws IOException {
- 
-      new CurrentPowerBiDaoIdade(2022,Calendar.APRIL).printDataIdade_15_34();
-      new CurrentPowerBiDaoIdade(2022,Calendar.APRIL).printDataIdade_35_49();
-      new CurrentPowerBiDaoIdade(2022,Calendar.APRIL).printDataIdade_50();
-
-    }
+  
 
 }

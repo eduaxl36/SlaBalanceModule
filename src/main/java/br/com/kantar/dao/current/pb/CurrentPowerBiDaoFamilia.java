@@ -40,25 +40,24 @@ public class CurrentPowerBiDaoFamilia {
     private final String Item2 = "3-4 pessoas";
     private final String Item3 = "5 E+ pessoas";
     private final String OutPrint = "c:/teste/teste.csv";
-
+  
     
     
-    public CurrentPowerBiDaoFamilia(int Ano, int Mes) {
+    public CurrentPowerBiDaoFamilia(int Ano, int Mes,EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Mes = Mes;
 
-        Conexao = new HibernateUtil().ConnectionFactoryJPA();
+        this.Conexao = Conexao;
 
     }
     
-    public CurrentPowerBiDaoFamilia(int Ano, PRACA Praca, int Mes) {
+    public CurrentPowerBiDaoFamilia(int Ano, PRACA Praca, int Mes,EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Praca = Praca;
         this.Mes = Mes;
-
-        Conexao = new HibernateUtil().ConnectionFactoryJPA();
+        this.Conexao = Conexao;
 
     }
 
@@ -96,7 +95,7 @@ public class CurrentPowerBiDaoFamilia {
 
             ItensFamilia.add(ProcessoFamilia);
         }
-  this.Conexao.close();
+
         return ItensFamilia;
 
     }
@@ -147,7 +146,7 @@ public class CurrentPowerBiDaoFamilia {
             }
 
         }
-  this.Conexao.close();
+ 
         return agregarListaFamiliar(
                 this.Ano,
                 Regiao,
@@ -208,7 +207,7 @@ public class CurrentPowerBiDaoFamilia {
             }
 
         }
-  this.Conexao.close();
+ 
         return agregarListaFamiliar(
                 this.Ano,
                 Regiao,
@@ -271,7 +270,7 @@ public class CurrentPowerBiDaoFamilia {
             }
 
         }
-  this.Conexao.close();
+
         return agregarListaFamiliar(
                 this.Ano,
                 Regiao,
@@ -294,7 +293,7 @@ public class CurrentPowerBiDaoFamilia {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-                List<CurrentPowerBiModel> Familias_1_2 = new CurrentPowerBiDaoFamilia(this.Ano, Pracas, this.Mes).retornaListaFamilia_1_2();
+                List<CurrentPowerBiModel> Familias_1_2 = new CurrentPowerBiDaoFamilia(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaFamilia_1_2();
                 Familias_1_2.forEach(Sintonias -> {
 
                     out.println(
@@ -326,7 +325,7 @@ public class CurrentPowerBiDaoFamilia {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-                List<CurrentPowerBiModel> Familias_3_4 = new CurrentPowerBiDaoFamilia(this.Ano, Pracas, this.Mes).retornaListaFamilia_3_4();
+                List<CurrentPowerBiModel> Familias_3_4 = new CurrentPowerBiDaoFamilia(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaFamilia_3_4();
                 Familias_3_4.forEach(Sintonias -> {
 
                     out.println(
@@ -358,7 +357,7 @@ public class CurrentPowerBiDaoFamilia {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-                List<CurrentPowerBiModel> Familias_5 = new CurrentPowerBiDaoFamilia(this.Ano, Pracas, this.Mes).retornaListaFamilia_5();
+                List<CurrentPowerBiModel> Familias_5 = new CurrentPowerBiDaoFamilia(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaFamilia_5();
                 Familias_5.forEach(Sintonias -> {
 
                     out.println(
@@ -385,9 +384,9 @@ public class CurrentPowerBiDaoFamilia {
 
     public static void main(String[] args) throws IOException {
 
-        new CurrentPowerBiDaoFamilia(2022,java.util.Calendar.APRIL).printDataFamilia1_2();
-         new CurrentPowerBiDaoFamilia(2022,java.util.Calendar.APRIL).printDataFamilia_3_4();
-          new CurrentPowerBiDaoFamilia(2022,java.util.Calendar.APRIL).printDataFamilia_5();
+//        new CurrentPowerBiDaoFamilia(2022,java.util.Calendar.APRIL).printDataFamilia1_2();
+//         new CurrentPowerBiDaoFamilia(2022,java.util.Calendar.APRIL).printDataFamilia_3_4();
+//          new CurrentPowerBiDaoFamilia(2022,java.util.Calendar.APRIL).printDataFamilia_5();
        
     }
 

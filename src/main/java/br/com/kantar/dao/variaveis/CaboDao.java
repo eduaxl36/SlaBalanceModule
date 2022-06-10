@@ -45,8 +45,7 @@ public class CaboDao {
     }
 
     
-    
-    
+   
     public CaboDao(int CodPraca, int Mes, int Ano, TIPOS_ENTREGAS Processo) {
         this.CodPraca = CodPraca;
         this.Mes = Mes;

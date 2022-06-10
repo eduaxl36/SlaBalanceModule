@@ -38,20 +38,20 @@ public class CurrentPowerBiDaoTelevisores {
     private final String Item2 = "2+ TVS";
     private final String OutPrint = "c:/teste/teste.csv";
 
-    public CurrentPowerBiDaoTelevisores(int Ano, int Mes) {
+    public CurrentPowerBiDaoTelevisores(int Ano, int Mes,EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Mes = Mes;
-        Conexao = new HibernateUtil().ConnectionFactoryJPA();
-
+        this.Conexao = Conexao;
+   
     }
 
-    public CurrentPowerBiDaoTelevisores(int Ano, PRACA Praca, int Mes) {
+    public CurrentPowerBiDaoTelevisores(int Ano, PRACA Praca, int Mes,EntityManager Conexao) {
 
         this.Ano = Ano;
         this.Praca = Praca;
         this.Mes = Mes;
-        Conexao = new HibernateUtil().ConnectionFactoryJPA();
+        this.Conexao = Conexao;
 
     }
 
@@ -131,7 +131,7 @@ public class CurrentPowerBiDaoTelevisores {
             }
 
         }
-  this.Conexao.close();
+ 
   
         return agregarListaTelevisores(
                 this.Ano,
@@ -201,7 +201,7 @@ public class CurrentPowerBiDaoTelevisores {
             }
 
         }
-  this.Conexao.close();
+ 
         return agregarListaTelevisores(
                 this.Ano,
                 Regiao,
@@ -224,7 +224,7 @@ public class CurrentPowerBiDaoTelevisores {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-                List<CurrentPowerBiModel> Televisores_1 = new CurrentPowerBiDaoTelevisores(this.Ano, Pracas, this.Mes).retornaListaTv1();
+                List<CurrentPowerBiModel> Televisores_1 = new CurrentPowerBiDaoTelevisores(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaTv1();
                 Televisores_1.forEach(Sintonias -> {
 
                     out.println(
@@ -256,7 +256,7 @@ public class CurrentPowerBiDaoTelevisores {
             br.com.kantar.connectionFactory.PRACA pracas[] = PRACA.values();
             for (PRACA Pracas : pracas) {
 
-                List<CurrentPowerBiModel> Televisores_1 = new CurrentPowerBiDaoTelevisores(this.Ano, Pracas, this.Mes).retornaListaTv2();
+                List<CurrentPowerBiModel> Televisores_1 = new CurrentPowerBiDaoTelevisores(this.Ano, Pracas, this.Mes,this.Conexao).retornaListaTv2();
                 Televisores_1.forEach(Sintonias -> {
 
                     out.println(
@@ -281,11 +281,6 @@ public class CurrentPowerBiDaoTelevisores {
 
     }
 
-    public static void main(String[] args) throws IOException {
 
-        new CurrentPowerBiDaoTelevisores(2022, Calendar.APRIL).printDataTelevisor_1();
-        new CurrentPowerBiDaoTelevisores(2022, Calendar.APRIL).printDataTelevisor_2();
-
-    }
 
 }
